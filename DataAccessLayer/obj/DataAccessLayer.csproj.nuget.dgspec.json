@@ -1,32 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\University\\5th Semester\\aFRR-NET\\DataAccessLayer\\DataAccessLayer.csproj": {}
+    "/Users/miroslavmarinov/Projects/aFRR-NET/DataAccessLayer/DataAccessLayer.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\University\\5th Semester\\aFRR-NET\\DataAccessLayer\\DataAccessLayer.csproj": {
+    "/Users/miroslavmarinov/Projects/aFRR-NET/DataAccessLayer/DataAccessLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\University\\5th Semester\\aFRR-NET\\DataAccessLayer\\DataAccessLayer.csproj",
+        "projectUniqueName": "/Users/miroslavmarinov/Projects/aFRR-NET/DataAccessLayer/DataAccessLayer.csproj",
         "projectName": "DataAccessLayer",
-        "projectPath": "D:\\Projects\\University\\5th Semester\\aFRR-NET\\DataAccessLayer\\DataAccessLayer.csproj",
-        "packagesPath": "C:\\Users\\Acer\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\University\\5th Semester\\aFRR-NET\\DataAccessLayer\\obj\\",
+        "projectPath": "/Users/miroslavmarinov/Projects/aFRR-NET/DataAccessLayer/DataAccessLayer.csproj",
+        "packagesPath": "/Users/miroslavmarinov/.nuget/packages/",
+        "outputPath": "/Users/miroslavmarinov/Projects/aFRR-NET/DataAccessLayer/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Acer\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/miroslavmarinov/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.pkg.github.com/OWNER/index.json": {},
+          "https://nuget.pkg.github.com/diversiwaver/index.json": {}
         },
         "frameworks": {
           "net7.0": {
@@ -59,7 +55,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.100/RuntimeIdentifierGraph.json"
         }
       }
     }

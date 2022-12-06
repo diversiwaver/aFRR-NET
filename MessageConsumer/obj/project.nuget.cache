@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "UrI+5/O0Hgd8VfuWSkYKyRhYxmozeJuqnoqPWLoNRByiYK7XBsA2OOR+N15bH8FD9a+jVeSkMChkpSM+oRAagA==",
+  "dgSpecHash": "LuyeUy2aexylscqCqxtLb7yW8FOn8ruJ4S7YZ3yv2GmuHjjUwx7EPZ5ZxSSaTKzNMpnFDRKYX0IbsxdrnzB19Q==",
   "success": true,
-  "projectFilePath": "D:\\Projects\\University\\5th Semester\\aFRR-NET\\MessageConsumer\\MessageConsumer.csproj",
+  "projectFilePath": "/Users/miroslavmarinov/Projects/aFRR-NET/MessageConsumer/MessageConsumer.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
