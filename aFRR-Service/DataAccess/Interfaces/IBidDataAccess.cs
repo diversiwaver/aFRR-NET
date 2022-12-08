@@ -1,5 +1,5 @@
 ﻿using DataAccess.Interfaces;
-using DataAccess.Models;
+using DataAccessLayer.Models;
 
 namespace DataAccessLayer.Interfaces;
 
