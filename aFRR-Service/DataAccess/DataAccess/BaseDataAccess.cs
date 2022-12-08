@@ -1,10 +1,10 @@
-﻿using DataAccess.Attributes;
-using DataAccess.Interfaces;
+﻿using DataAccessLayer.Attributes;
+using DataAccessLayer.Interfaces;
 using System.Data;
 using System.Data.SqlClient;
 using Dapper;
 
-namespace DataAccess.DataAccess;
+namespace DataAccessLayer.DataAccess;
 
 internal abstract class BaseDataAccess<T> : IBaseDataAccess<T> where T : class
 {
@@ -19,13 +19,13 @@ internal abstract class BaseDataAccess<T> : IBaseDataAccess<T> where T : class
     // ValueUpdates = "value1=@value1, value2=@value2"
     private string ValueUpdates => GetJoinedConditionStrings(TableColumns, prefix: "@");
 
-    private protected BaseDataAccess(string connectionstring)
+    public BaseDataAccess(string connectionString)
     {
         TableName = typeof(T).Name;
         AutoIncrementingIds = GetAllPropertyNamesWithAttribute(typeof(IsAutoIncrementingIDAttribute));
         PrimaryKeys = GetAllPropertyNamesWithAttribute(typeof(IsPrimaryKeyAttribute));
         TableColumns = typeof(T).GetProperties().Select(property => property.Name).Except(AutoIncrementingIds);
-        _connetionString = connectionstring;
+        _connetionString = connectionString;
 
         string condition = GetJoinedConditionStrings(PrimaryKeys, separator: " AND", prefix: "@");
         UpdateCommand = $"UPDATE {TableName} SET {ValueUpdates} WHERE {condition};";

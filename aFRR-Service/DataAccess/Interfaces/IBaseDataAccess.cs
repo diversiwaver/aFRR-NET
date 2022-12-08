@@ -1,4 +1,4 @@
-﻿namespace DataAccess.Interfaces;
+﻿namespace DataAccessLayer.Interfaces;
 public interface IBaseDataAccess<T>
 {
     Task<int> CreateAsync(T entity);
