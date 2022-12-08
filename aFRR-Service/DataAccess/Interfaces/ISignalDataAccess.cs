@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DataAccess.Interfaces;
+using DataAccess.Models;
 
-namespace DataAccessLayer.Interfaces
+namespace DataAccessLayer.Interfaces;
+
+internal interface ISignalDataAccess : IBaseDataAccess<Signal>
 {
-    internal interface ISignalDataAccess : IBaseDataAccess<Signal>
-    {
-    }
 }

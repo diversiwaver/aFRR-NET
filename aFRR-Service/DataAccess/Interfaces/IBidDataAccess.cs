@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DataAccess.Interfaces;
+using DataAccess.Models;
 
-namespace DataAccessLayer.Interfaces
+namespace DataAccessLayer.Interfaces;
+
+internal interface IBidDataAccess : IBaseDataAccess<Bid>
 {
-    internal interface IBidDataAccess : IBaseDataAccess<Bid>
-    {
-    }
 }
