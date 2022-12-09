@@ -78,9 +78,9 @@ internal abstract class BaseDataAccess<T> : IBaseDataAccess<T> where T : class
             if (!AutoIncrementingIds.Any())
             {
                 using GridReader multiQuery = await connection.QueryMultipleAsync(InsertCommand, entity);
-                foreach (int rowsAffected in multiQuery.Read<int>().ToList())
+                while (!multiQuery.IsConsumed)
                 {
-                    if (rowsAffected == 0)
+                    if (multiQuery.Read<int>().Single() == 0)
                     {
                         throw new ArgumentException("No rows affected in secondary queries");
                     }
@@ -91,9 +91,9 @@ internal abstract class BaseDataAccess<T> : IBaseDataAccess<T> where T : class
             {
                 using GridReader multiQuery = await connection.QueryMultipleAsync(InsertCommand, entity);
                 int id = multiQuery.Read<int>().SingleOrDefault();
-                foreach(int rowsAffected in multiQuery.Read<int>().ToList())
+                while (!multiQuery.IsConsumed)
                 {
-                    if(rowsAffected == 0)
+                    if (multiQuery.Read<int>().Single() == 0)
                     {
                         throw new ArgumentException("No rows affected in secondary queries");
                     }
