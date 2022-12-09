@@ -36,7 +36,7 @@ public class TestSignalDataAccess
         _signal.ID = await _dataAccess.CreateAsync(signal);
 
         //Assert
-        Assert.That(_signal.ID, Is.GreaterThan(0), $"Failed to insert a new Signal.");
+        Assert.That(_signal.ID, Is.Not.EqualTo(-1), $"Failed to insert a new Signal.");
     }
 
     [Test]
