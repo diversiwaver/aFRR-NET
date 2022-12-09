@@ -2,6 +2,6 @@
 
 namespace DataAccessLayer.Interfaces;
 
-internal interface IBidDataAccess : IBaseDataAccess<Bid>
+public interface IBidDataAccess : IBaseDataAccess<Bid>
 {
 }

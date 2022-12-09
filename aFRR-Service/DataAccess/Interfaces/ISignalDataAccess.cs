@@ -2,6 +2,6 @@
 
 namespace DataAccessLayer.Interfaces;
 
-internal interface ISignalDataAccess : IBaseDataAccess<Signal>
+public interface ISignalDataAccess : IBaseDataAccess<Signal>
 {
 }

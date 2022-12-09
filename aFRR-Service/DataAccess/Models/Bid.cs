@@ -2,7 +2,7 @@
 
 namespace DataAccessLayer.Models;
 
-internal class Bid
+public class Bid
 {
     [IsPrimaryKey]
     [IsAutoIncrementingID]

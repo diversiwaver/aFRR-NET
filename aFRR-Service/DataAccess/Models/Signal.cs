@@ -2,7 +2,7 @@
 
 namespace DataAccessLayer.Models;
 
-internal class Signal
+public class Signal
 {
     [IsPrimaryKey]
     [IsAutoIncrementingID]
@@ -13,4 +13,5 @@ internal class Signal
     public int CurrencyId { get; set; }
     public decimal QuantityMw { get; set; }
     public int DirectionId { get; set; }
+    public int BidId { get; set; }
 }
