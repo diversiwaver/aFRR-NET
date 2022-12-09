@@ -3,6 +3,7 @@ using DataAccessLayer.Interfaces;
 using System.Data;
 using System.Data.SqlClient;
 using Dapper;
+using static Dapper.SqlMapper;
 
 namespace DataAccessLayer.DataAccess;
 
@@ -76,12 +77,28 @@ internal abstract class BaseDataAccess<T> : IBaseDataAccess<T> where T : class
             using var connection = CreateConnection();
             if (!AutoIncrementingIds.Any())
             {
-                await connection.QuerySingleOrDefaultAsync(InsertCommand, entity);
+                using GridReader multiQuery = await connection.QueryMultipleAsync(InsertCommand, entity);
+                foreach (int rowsAffected in multiQuery.Read<int>().ToList())
+                {
+                    if (rowsAffected == 0)
+                    {
+                        throw new ArgumentException("No rows affected in secondary queries");
+                    }
+                }
                 return await Task.FromResult(0);
             }
             else
             {
-                return await connection.QuerySingleAsync<int>(InsertCommand, entity);
+                using GridReader multiQuery = await connection.QueryMultipleAsync(InsertCommand, entity);
+                int id = multiQuery.Read<int>().SingleOrDefault();
+                foreach(int rowsAffected in multiQuery.Read<int>().ToList())
+                {
+                    if(rowsAffected == 0)
+                    {
+                        throw new ArgumentException("No rows affected in secondary queries");
+                    }
+                }
+                return id;
             }
         }
         catch (Exception exception)
