@@ -6,12 +6,12 @@ public class Signal
 {
     [IsPrimaryKey]
     [IsAutoIncrementingID]
-    public int ID { get; set; }
-    public DateTime FromUtc { get; set; }
-    public DateTime ToUtc { get; set; }
-    public decimal Price { get; set; }
-    public int CurrencyId { get; set; }
-    public decimal QuantityMw { get; set; }
-    public int DirectionId { get; set; }
-    public int BidId { get; set; }
+    public int Id { get; init; }
+    public DateTime FromUtc { get; init; }
+    public DateTime ToUtc { get; init; }
+    public decimal Price { get; init; }
+    public int CurrencyId { get; init; }
+    public decimal QuantityMw { get; init; }
+    public int DirectionId { get; init; }
+    public int BidId { get; init; }
 }
