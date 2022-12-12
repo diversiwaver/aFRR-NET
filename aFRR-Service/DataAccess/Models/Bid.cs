@@ -8,8 +8,8 @@ public class Bid
     [IsAutoIncrementingID]
     public int Id { get; init; }
     public int ExternalId { get; init; }
-    public int FromUTC { get; init; }
-    public int ToUTC { get; init; }
+    public DateTime FromUtc { get; init; }
+    public DateTime ToUtc { get; init; }
     public decimal QuantityMw { get; init; }
     public decimal Price { get; init; }
     public int CurrencyId { get; init; }
