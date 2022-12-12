@@ -116,4 +116,17 @@ public class TestSignalDataAccess
         //Asert
         Assert.That(isDeleted, Is.True, $"Failed to delete Signal with ID: '{_lastCreatedModelId}'");
     }
+
+    [Test]
+    [Order(6)]
+    public async Task SignalDataAccess_ShouldThrowException_WhenGivenEmptyRequest()
+    {
+        //Arrange
+        Signal signal = new() { };
+
+        //Act
+
+        //Asert
+        Assert.That(async () => _lastCreatedModelId = await _dataAccess.CreateAsync(signal), Throws.Exception.TypeOf<Exception>(), $"Created signal when it should have failed!: '{_lastCreatedModelId}'");
+    }
 }
