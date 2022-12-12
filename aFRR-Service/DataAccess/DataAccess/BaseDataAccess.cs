@@ -3,6 +3,7 @@ using DataAccessLayer.Interfaces;
 using System.Data;
 using System.Data.SqlClient;
 using Dapper;
+using System.Linq;
 
 namespace DataAccessLayer.DataAccess;
 
@@ -24,7 +25,10 @@ internal abstract class BaseDataAccess<T> : IBaseDataAccess<T> where T : class
         TableName = typeof(T).Name;
         AutoIncrementingIds = GetAllPropertyNamesWithAttribute(typeof(IsAutoIncrementingIDAttribute));
         PrimaryKeys = GetAllPropertyNamesWithAttribute(typeof(IsPrimaryKeyAttribute));
-        TableColumns = typeof(T).GetProperties().Select(property => property.Name).Except(AutoIncrementingIds);
+        TableColumns = typeof(T).GetProperties()
+            .Select(property => property.Name)
+            .Except(AutoIncrementingIds)
+            .Except(GetAllPropertyNamesWithAttribute(typeof(ExcludeFromDataAccessAttribute)));
         _connetionString = connectionString;
 
         string condition = GetJoinedConditionStrings(PrimaryKeys, separator: " AND", prefix: "@");

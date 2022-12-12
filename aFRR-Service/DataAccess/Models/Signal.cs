@@ -13,5 +13,11 @@ public class Signal
     public int CurrencyId { get; init; }
     public decimal QuantityMw { get; init; }
     public int DirectionId { get; init; }
+    [ExcludeFromDataAccess]
     public int BidId { get; init; }
+
+    public override string ToString()
+    {
+        return $"Signal:{{Id={Id}, FromUtc={FromUtc}, ToUtc={ToUtc}, Price={Price}, CurrencyId={CurrencyId}, QuantityMw={QuantityMw}, DirectionId={DirectionId}, BidId={BidId}}}";
+    }
 }
