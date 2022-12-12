@@ -119,14 +119,43 @@ public class TestSignalDataAccess
 
     [Test]
     [Order(6)]
-    public async Task SignalDataAccess_ShouldThrowException_WhenGivenEmptyRequest()
+    public async Task SignalDataAccess_ShouldThrowException_WhenGivenEmptySignal()
     {
         //Arrange
+        int createdId = -1;
         Signal signal = new() { };
 
         //Act
 
         //Asert
-        Assert.That(async () => _lastCreatedModelId = await _dataAccess.CreateAsync(signal), Throws.Exception.TypeOf<Exception>(), $"Created signal when it should have failed!: '{_lastCreatedModelId}'");
+        Assert.That(async () => createdId = await _dataAccess.CreateAsync(signal), Throws.Exception.TypeOf<Exception>(), $"Created signal when it should have failed!: '{createdId}'");
+        await _dataAccess.DeleteAsync(createdId);
+    }
+
+    [Test]
+    [Order(7)]
+    public async Task SignalDataAccess_ShouldThrowArgumentException_WhenGivenInvalidBidId()
+    {
+        //Arrange
+        int createdId = -1;
+        Signal refoundSignal;
+        Signal signal = new()
+        {
+            FromUtc = DateTime.UtcNow,
+            ToUtc = DateTime.UtcNow.AddHours(1),
+            Price = 20,
+            CurrencyId = 1,
+            QuantityMw = 10,
+            DirectionId = 0,
+            BidId = -999
+        };
+
+        //Act
+        var innerException = Assert.Throws<Exception>(async () => createdId = await _dataAccess.CreateAsync(signal)).InnerException;
+
+        //Asert
+        Assert.That(innerException, Is.TypeOf<ArgumentException>(), $"Invalid Exception thrown with BidId -999! createdId: {createdId}");
+        refoundSignal = await _dataAccess.GetAsync(createdId);
+        Assert.That(refoundSignal, Is.Null, "Created Signal wasn't rollbacked!");
     }
 }
