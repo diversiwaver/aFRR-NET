@@ -16,7 +16,7 @@ internal class SignalDataAccess : BaseDataAccess<Signal>, ISignalDataAccess
             DECLARE @GeneratedId INT;
             SET @GeneratedId = SCOPE_IDENTITY();
 
-            INSERT INTO BidSignalMember (BidId, SignalId) VALUES (0, @GeneratedId)
+            INSERT INTO BidSignalMember (BidId, SignalId) VALUES (@BidId, @GeneratedId)
 
             COMMIT; 
             """;
