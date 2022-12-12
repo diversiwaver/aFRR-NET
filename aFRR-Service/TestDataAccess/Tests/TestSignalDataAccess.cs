@@ -1,9 +1,8 @@
 using DataAccessLayer.Interfaces;
 using DataAccessLayer;
 using DataAccessLayer.Models;
-using System.Data;
 
-namespace TestDataAccess;
+namespace TestDataAccess.Tests;
 
 public class TestSignalDataAccess
 {
@@ -84,7 +83,7 @@ public class TestSignalDataAccess
         Signal signal = new()
         {
             Id = _lastCreatedModelId,
-            FromUtc = new DateTime(2022, 12, 11, 10, 0 ,0),
+            FromUtc = new DateTime(2022, 12, 11, 10, 0, 0),
             ToUtc = new DateTime(2022, 12, 11, 12, 0, 0),
             Price = 20,
             CurrencyId = 1,
