@@ -1,6 +1,7 @@
 using DataAccessLayer.Interfaces;
 using DataAccessLayer;
 using DataAccessLayer.Models;
+using System.Data.SqlClient;
 
 namespace TestDataAccess.Tests;
 
@@ -35,7 +36,7 @@ public class TestSignalDataAccess
             CurrencyId = 1,
             QuantityMw = 10,
             DirectionId = 0,
-            BidId = 1
+            BidId = 0
         };
 
         //Act
@@ -88,7 +89,8 @@ public class TestSignalDataAccess
             Price = 20,
             CurrencyId = 1,
             QuantityMw = 10,
-            DirectionId = newDirectionId
+            DirectionId = newDirectionId,
+            BidId = 0
         };
 
         //Act
@@ -151,11 +153,20 @@ public class TestSignalDataAccess
         };
 
         //Act
-        var innerException = Assert.Throws<Exception>(async () => createdId = await _dataAccess.CreateAsync(signal)).InnerException;
-
+        try
+        {
+            createdId = await _dataAccess.CreateAsync(signal);
+            refoundSignal = await _dataAccess.GetAsync(createdId);
+            Assert.That(refoundSignal, Is.Null, $"Created Signal wasn't rollbacked! createdId {createdId}");
+        }
         //Asert
-        Assert.That(innerException, Is.TypeOf<ArgumentException>(), $"Invalid Exception thrown with BidId -999! createdId: {createdId}");
-        refoundSignal = await _dataAccess.GetAsync(createdId);
-        Assert.That(refoundSignal, Is.Null, "Created Signal wasn't rollbacked!");
+        catch (Exception ex)
+        {
+            Assert.That(ex.InnerException, Is.TypeOf<SqlException>(), $"Invalid Exception thrown with BidId -999!");
+        }
+
+        if (createdId != -1) {
+            await _dataAccess.DeleteAsync(createdId);
+        }
     }
 }
