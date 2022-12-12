@@ -1,6 +1,6 @@
 ﻿namespace WebAPI.DTOs;   
 
-public class BidDto
+public class BidDTO
 {
     public int Id { get; set; }
     public int ExternalId { get; set; }

@@ -2,7 +2,7 @@
 
 namespace WebAPI.DTOs;
 
-public class SignalDto
+public class SignalDTO
 {
     public int Id { get; set; }
     public DateTime FromUtc { get; set; }

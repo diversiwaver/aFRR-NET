@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DataAccessLayer.Interfaces;
+using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Cryptography;
+using WebAPI.DTOs;
+using WebAPI.DTOs.DTOConverters;
 
 namespace WebAPI.Controllers;
 
@@ -37,7 +39,7 @@ public class SignalsController : ControllerBase
             }
             else
             {
-                return InternalServerError();
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
     }

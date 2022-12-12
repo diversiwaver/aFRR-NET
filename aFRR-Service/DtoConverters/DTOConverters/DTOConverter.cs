@@ -2,7 +2,7 @@
 
 namespace WebAPI.DTOs.DTOConverters;
 
-public static class DtoConverter<T, U>
+public static class DTOConverter<T, U>
 {
     private static MapperConfiguration config = new(cfg =>
     {
