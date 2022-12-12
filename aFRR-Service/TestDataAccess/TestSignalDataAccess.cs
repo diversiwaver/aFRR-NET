@@ -1,6 +1,7 @@
 using DataAccessLayer.Interfaces;
 using DataAccessLayer;
 using DataAccessLayer.Models;
+using System.Data;
 
 namespace TestDataAccess;
 
@@ -34,7 +35,7 @@ public class TestSignalDataAccess
             Price = 20,
             CurrencyId = 1,
             QuantityMw = 10,
-            DirectionId = 1,
+            DirectionId = 0,
             BidId = 1
         };
 
@@ -78,18 +79,17 @@ public class TestSignalDataAccess
     public async Task SignalDataAccess_ShouldReturnTrueAndTheNewSignal_WhenUpdatingAndGettingSignal()
     {
         //Arrange
-        int newDirectionId = 2;
+        int newDirectionId = 1;
         bool isUpdated;
         Signal signal = new()
         {
             Id = _lastCreatedModelId,
-            FromUtc = DateTime.UtcNow,
-            ToUtc = DateTime.UtcNow.AddHours(1),
+            FromUtc = new DateTime(2022, 12, 11, 10, 0 ,0),
+            ToUtc = new DateTime(2022, 12, 11, 12, 0, 0),
             Price = 20,
             CurrencyId = 1,
             QuantityMw = 10,
-            DirectionId = newDirectionId,
-            BidId = 1
+            DirectionId = newDirectionId
         };
 
         //Act
@@ -100,7 +100,7 @@ public class TestSignalDataAccess
         Assert.Multiple(() =>
         {
             Assert.That(isUpdated, Is.True, $"Failed to update Signal with ID: '{_lastCreatedModelId}'");
-            Assert.That(refoundSignal, Is.EqualTo(signal), $"Getting the updated signal from the database returned a different one.");
+            Assert.That(refoundSignal.DirectionId, Is.EqualTo(signal.DirectionId), $"Getting the updated signal from the database returned a different one.");
         });
     }
 
