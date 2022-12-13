@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-
-namespace WebAPI.DTOs;
+﻿namespace WebAPI.DTOs;
 
 public class SignalDTO
 {

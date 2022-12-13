@@ -4,12 +4,12 @@ namespace WebAPI.DTOs.DTOConverters;
 
 public static class DTOConverter<T, U>
 {
-    private static MapperConfiguration config = new(cfg =>
+    private readonly static MapperConfiguration config = new(cfg =>
     {
         cfg.CreateMap<T, U>();
 
     });
-    private static Mapper mapper = new(config);
+    private readonly static Mapper mapper = new(config);
 
     //      OUTPUT                     <FROM>      <TO>               <SOURCE>
     //var bookingList = DtoConverter<BookingDto, Booking>.FromList(bookingDtoList);

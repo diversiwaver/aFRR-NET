@@ -3,7 +3,7 @@
 public class BidDTO
 {
     public int Id { get; set; }
-    public int ExternalId { get; set; }
+    public Guid ExternalId { get; set; }
     public DateTime FromUtc { get; set; }
     public DateTime ToUtc { get; set; }
     public decimal QuantityMw { get; set; }
