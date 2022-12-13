@@ -10,7 +10,7 @@ namespace WebAPI.Controllers;
 [ApiController]
 public class SignalsController : ControllerBase
 {
-    ISignalDataAccess _signalDataAccess;
+    private readonly ISignalDataAccess _signalDataAccess;
 
     public SignalsController(ISignalDataAccess signalDataAccess)
     {

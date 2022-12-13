@@ -3,14 +3,20 @@ using DataAccessLayer.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
+string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+if (connectionString is null)
+{
+    // TODO: Log an error when retrieving the connection string
+    throw new ArgumentNullException(nameof(connectionString), "Failed to retrieve connection string. Is it defined in the configuration?");
+}
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Configuring Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped((dataAccess) => DataAccessFactory.GetDataAccess<ISignalDataAccess>(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddScoped((dataAccess) => DataAccessFactory.GetDataAccess<IBidDataAccess>(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped((dataAccess) => DataAccessFactory.GetDataAccess<ISignalDataAccess>(connectionString));
+builder.Services.AddScoped((dataAccess) => DataAccessFactory.GetDataAccess<IBidDataAccess>(connectionString));
 
 var app = builder.Build();
 
@@ -22,9 +28,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

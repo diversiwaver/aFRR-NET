@@ -10,7 +10,7 @@ namespace WebAPI.Controllers;
 [ApiController]
 public class BidsController : ControllerBase
 {
-    IBidDataAccess _bidDataAccess;
+    private readonly IBidDataAccess _bidDataAccess;
 
     public BidsController(IBidDataAccess bidDataAccess)
     {
