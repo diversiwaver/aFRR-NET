@@ -1,8 +1,10 @@
-﻿using DataAccessLayer.Models;
-using WebAPI.Controllers;
+﻿using WebAPI.Controllers;
 using TestWebAPI.Stubs;
 using WebAPI.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using NUnit.Framework.Internal;
+using Microsoft.Extensions.Logging;
+using Moq;
 
 namespace TestWebAPI.Tests;
 
@@ -13,7 +15,7 @@ public class TestBidController
     [OneTimeSetUp]
     public void OneTimeSetup()
     {
-        _webApiController = new BidsController(new BidStub());
+        _webApiController = new BidsController(new BidStub(), new Mock<ILogger<BidsController>>().Object);
     }
 
     [Test]
