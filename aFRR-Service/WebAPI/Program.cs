@@ -9,8 +9,15 @@ if (connectionString is null)
     // TODO: Log an error when retrieving the connection string
     throw new ArgumentNullException(nameof(connectionString), "Failed to retrieve connection string. Is it defined in the configuration?");
 }
-// Add services to the container.
 
+// Add services to the container.
+//Add Logging
+builder.Services.AddLogging(configure =>
+{
+    configure.AddConsole(); // enables logging in console
+    configure.AddDebug(); // enables logging to the debgger
+    configure.AddEventSourceLogger(); // Enables logging using the EventSource class.
+});
 builder.Services.AddControllers();
 // Configuring Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
