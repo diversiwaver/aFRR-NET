@@ -1,8 +1,9 @@
-﻿using DataAccessLayer.Models;
-using WebAPI.Controllers;
+﻿using WebAPI.Controllers;
 using TestWebAPI.Stubs;
 using WebAPI.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Moq;
 
 namespace TestWebAPI.Tests;
 
@@ -13,7 +14,7 @@ public class TestSignalController
     [OneTimeSetUp]
     public void OneTimeSetup()
     {
-        _webApiController = new SignalsController(new SignalStub());
+        _webApiController = new SignalsController(new SignalStub(), new Mock<ILogger<SignalsController>>().Object);
     }
 
     [Test]
