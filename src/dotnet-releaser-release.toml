@@ -1,5 +1,5 @@
 [msbuild]
-project = "../aFRR-Service.sln"
+project = "../aFRR-Service/aFRR-Service.sln"
 configuration = "Release"
 [github]
 user = "diversiwaver"
