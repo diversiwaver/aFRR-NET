@@ -4,7 +4,7 @@ configuration = "Release"
 [github]
 user = "diversiwaver"
 repo = "aFRR-NET"
-version_prefix = "v"
+
 [test]
 enable = false
 [coverage]
