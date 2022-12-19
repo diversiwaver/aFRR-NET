@@ -1,7 +1,7 @@
-﻿using DataAccessLayer.Interfaces;
-using DataAccessLayer.Models;
+﻿using BaseDataAccess.Interfaces;
+using BaseDataAccess.Models;
 
-namespace DataAccessLayer.DataAccess;
+namespace BaseDataAccess.DataAccess;
 
 internal class BidDataAccess : BaseDataAccess<Bid>, IBidDataAccess
 {

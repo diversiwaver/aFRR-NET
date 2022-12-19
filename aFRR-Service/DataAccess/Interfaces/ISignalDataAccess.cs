@@ -1,6 +1,6 @@
-﻿using DataAccessLayer.Models;
+﻿using BaseDataAccess.Models;
 
-namespace DataAccessLayer.Interfaces;
+namespace BaseDataAccess.Interfaces;
 
 public interface ISignalDataAccess : IBaseDataAccess<Signal>
 {

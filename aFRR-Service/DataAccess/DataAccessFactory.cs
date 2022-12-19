@@ -1,6 +1,6 @@
-﻿using DataAccessLayer.DataAccess;
+﻿using BaseDataAccess.DataAccess;
 
-namespace DataAccessLayer;
+namespace BaseDataAccess;
 public class DataAccessFactory
 {
     public static T GetDataAccess<T>(string connectionString) where T : class

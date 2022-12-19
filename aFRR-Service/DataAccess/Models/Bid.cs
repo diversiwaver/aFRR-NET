@@ -1,6 +1,6 @@
-﻿using DataAccessLayer.Attributes;
+﻿using BaseDataAccess.Attributes;
 
-namespace DataAccessLayer.Models;
+namespace BaseDataAccess.Models;
 
 public class Bid
 {

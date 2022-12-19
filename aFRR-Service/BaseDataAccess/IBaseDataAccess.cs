@@ -1,4 +1,6 @@
-﻿namespace DataAccessLayer.Interfaces;
+﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace BaseDataAccess;
 public interface IBaseDataAccess<T>
 {
     Task<int> CreateAsync(T entity);

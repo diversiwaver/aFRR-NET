@@ -1,7 +1,7 @@
-﻿using DataAccessLayer.Interfaces;
-using DataAccessLayer.Models;
+﻿using BaseDataAccess.Interfaces;
+using BaseDataAccess.Models;
 
-namespace DataAccessLayer.DataAccess;
+namespace BaseDataAccess.DataAccess;
 internal class SignalDataAccess : BaseDataAccess<Signal>, ISignalDataAccess
 {
     internal SignalDataAccess(string connectionString) : base(connectionString)

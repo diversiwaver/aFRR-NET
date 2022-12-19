@@ -1,6 +1,6 @@
-using DataAccessLayer.Interfaces;
-using DataAccessLayer;
-using DataAccessLayer.Models;
+using BaseDataAccess.Interfaces;
+using BaseDataAccess;
+using BaseDataAccess.Models;
 using System.Data.SqlClient;
 
 namespace TestDataAccess.Tests;

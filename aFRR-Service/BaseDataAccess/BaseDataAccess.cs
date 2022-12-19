@@ -1,13 +1,11 @@
-﻿using DataAccessLayer.Attributes;
-using DataAccessLayer.Interfaces;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
 using Dapper;
-using System.Linq;
+using BaseDataAccess.Attributes;
 
-namespace DataAccessLayer.DataAccess;
+namespace BaseDataAccess;
 
-internal abstract class BaseDataAccess<T> : IBaseDataAccess<T> where T : class
+public abstract class BaseDataAccess<T> : IBaseDataAccess<T> where T : class
 {
     private readonly string _connetionString;
 
@@ -51,26 +49,26 @@ internal abstract class BaseDataAccess<T> : IBaseDataAccess<T> where T : class
             InsertCommand = $"INSERT INTO {TableName} ({ValueNames}) VALUES ({ValueParameters});";
         }
     }
-    private protected IDbConnection CreateConnection() => new SqlConnection(_connetionString);
+    protected IDbConnection CreateConnection() => new SqlConnection(_connetionString);
 
     // The name of the table
-    private protected string TableName { get; set; }
+    protected string TableName { get; set; }
 
     // List of all primary keys, can be multiple in compund keys
-    private protected IEnumerable<string> PrimaryKeys { get; set; }
+    protected IEnumerable<string> PrimaryKeys { get; set; }
 
     // List of all auto incrementing IDs
-    private protected IEnumerable<string> AutoIncrementingIds { get; set; }
+    protected IEnumerable<string> AutoIncrementingIds { get; set; }
 
     // All TableColumns, excluding any auto incrementing IDs, those can be gotten from AutoIncrementingIds and often from PrimaryKeys
-    private protected IEnumerable<string> TableColumns { get; set; }
+    protected IEnumerable<string> TableColumns { get; set; }
 
     //Commands
-    private protected string InsertCommand { get; set; }
-    private protected string GetCommand { get; set; }
-    private protected string GetAllCommand { get; set; }
-    private protected string UpdateCommand { get; set; }
-    private protected string DeleteCommand { get; set; }
+    protected string InsertCommand { get; set; }
+    protected string GetCommand { get; set; }
+    protected string GetAllCommand { get; set; }
+    protected string UpdateCommand { get; set; }
+    protected string DeleteCommand { get; set; }
 
     public virtual async Task<int> CreateAsync(T entity)
     {
