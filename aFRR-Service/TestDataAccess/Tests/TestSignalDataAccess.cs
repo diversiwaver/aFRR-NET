@@ -115,7 +115,7 @@ public class TestSignalDataAccess
         //Act
         isDeleted = await _dataAccess.DeleteAsync(_lastCreatedModelId);
 
-        //Asert
+        //Assert
         Assert.That(isDeleted, Is.True, $"Failed to delete Signal with ID: '{_lastCreatedModelId}'");
     }
 
@@ -129,7 +129,7 @@ public class TestSignalDataAccess
 
         //Act
 
-        //Asert
+        //Assert
         Assert.That(async () => createdId = await _dataAccess.CreateAsync(signal), Throws.Exception.TypeOf<Exception>(), $"Created signal when it should have failed!: '{createdId}'");
         await _dataAccess.DeleteAsync(createdId);
     }
@@ -159,7 +159,7 @@ public class TestSignalDataAccess
             refoundSignal = await _dataAccess.GetAsync(createdId);
             Assert.That(refoundSignal, Is.Null, $"Created Signal wasn't rollbacked! createdId {createdId}");
         }
-        //Asert
+        //Assert
         catch (Exception ex)
         {
             Assert.That(ex.InnerException, Is.TypeOf<SqlException>(), $"Invalid Exception thrown with BidId -999!");
