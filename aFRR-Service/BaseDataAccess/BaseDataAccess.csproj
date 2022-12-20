@@ -6,23 +6,15 @@
     <Nullable>enable</Nullable>
 	  <MinVerTagPrefix>v</MinVerTagPrefix>
 	  <MinVerIgnoreHeight>true</MinVerIgnoreHeight>
-	  <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.123" />
     <PackageReference Include="MinVer" Version="4.2.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\BaseDataAccess\BaseDataAccess.csproj" />
   </ItemGroup>
 
 </Project>
