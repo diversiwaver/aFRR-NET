@@ -81,16 +81,19 @@ public class TestSignalDataAccess
         //Arrange
         int newDirectionId = 1;
         bool isUpdated;
-        Signal signal = new()
+        Signal signal = await _dataAccess.GetAsync(_lastCreatedModelId);
+        int oldDirectionId = signal.DirectionId;
+
+        signal = new()
         {
             Id = _lastCreatedModelId,
-            FromUtc = new DateTime(2022, 12, 11, 10, 0, 0),
-            ToUtc = new DateTime(2022, 12, 11, 12, 0, 0),
-            Price = 20,
-            CurrencyId = 1,
-            QuantityMw = 10,
+            FromUtc = signal.FromUtc,
+            ToUtc = signal.ToUtc,
+            Price = signal.Price,
+            CurrencyId = signal.CurrencyId,
+            QuantityMw = signal.QuantityMw,
             DirectionId = newDirectionId,
-            BidId = 0
+            BidId = signal.BidId
         };
 
         //Act
@@ -101,6 +104,7 @@ public class TestSignalDataAccess
         Assert.Multiple(() =>
         {
             Assert.That(isUpdated, Is.True, $"Failed to update Signal with ID: '{_lastCreatedModelId}'");
+            Assert.That(refoundSignal.DirectionId, Is.Not.EqualTo(oldDirectionId), $"The direction id was not changed");
             Assert.That(refoundSignal.DirectionId, Is.EqualTo(signal.DirectionId), $"Getting the updated signal from the database returned a different one.");
         });
     }

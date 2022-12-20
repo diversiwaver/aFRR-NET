@@ -79,15 +79,18 @@ public class TestBidDataAccess
         //Arrange
         int newQuantity = 20;
         bool isUpdated;
-        Bid bid = new()
+        Bid bid = await _dataAccess.GetAsync(_lastCreatedModelId);
+        decimal oldQuantity = bid.QuantityMw;
+
+        bid = new()
         {
             Id = _lastCreatedModelId,
-            ExternalId = new Guid(),
-            FromUtc = new DateTime(2022, 12, 11, 10, 0, 0),
-            ToUtc = new DateTime(2022, 12, 11, 12, 0, 0),
+            ExternalId = bid.ExternalId,
+            FromUtc = bid.FromUtc,
+            ToUtc = bid.ToUtc,
             QuantityMw = newQuantity,
-            Price = 20,
-            CurrencyId = 0
+            Price = bid.Price,
+            CurrencyId = bid.CurrencyId
         };
 
         //Act
@@ -98,6 +101,7 @@ public class TestBidDataAccess
         Assert.Multiple(() =>
         {
             Assert.That(isUpdated, Is.True, $"Failed to update Bid with ID: '{_lastCreatedModelId}'");
+            Assert.That(refoundBid.QuantityMw, Is.Not.EqualTo(oldQuantity), $"Quantity is the same as before, it didn't update.");
             Assert.That(refoundBid.QuantityMw, Is.EqualTo(bid.QuantityMw), $"Getting the updated bid from the database returned a different one.");
         });
     }
