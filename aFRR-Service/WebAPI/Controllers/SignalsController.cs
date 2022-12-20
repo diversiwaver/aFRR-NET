@@ -1,8 +1,6 @@
-﻿using DataAccessLayer.Interfaces;
-using DataAccessLayer.Models;
+﻿using BaseDataAccess.Interfaces;
+using BaseDataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
 using WebAPI.DTOs;
 using WebAPI.DTOs.DTOConverters;
 
@@ -63,6 +61,7 @@ public class SignalsController : ControllerBase
          _logger.LogInformation("Converting Signal to SignalDTO.");
         IEnumerable<SignalDTO> signalDtos = DTOConverter<Signal, SignalDTO>.FromList(signals);
         _logger.LogInformation("Converted {Count} signals to SignalDTO objects.", signalDtos.Count());
+
         _logger.LogInformation("Finished getting all signals.");
         return Ok(signalDtos);
     }

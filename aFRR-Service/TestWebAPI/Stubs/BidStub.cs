@@ -1,5 +1,5 @@
-﻿using DataAccessLayer.Interfaces;
-using DataAccessLayer.Models;
+﻿using BaseDataAccess.Interfaces;
+using BaseDataAccess.Models;
 
 namespace TestWebAPI.Stubs;
 

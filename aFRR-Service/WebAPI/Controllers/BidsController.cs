@@ -1,5 +1,5 @@
-﻿using DataAccessLayer.Interfaces;
-using DataAccessLayer.Models;
+﻿using BaseDataAccess.Interfaces;
+using BaseDataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.DTOs;
 using WebAPI.DTOs.DTOConverters;

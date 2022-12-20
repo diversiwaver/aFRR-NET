@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BaseDataAccess\BaseDataAccess.csproj" />
     <ProjectReference Include="..\DataAccess\DataAccessLayer.csproj" />
     <ProjectReference Include="..\DtoConverters\aFRRService.DTOs.csproj" />
   </ItemGroup>
