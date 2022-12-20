@@ -115,7 +115,7 @@ public class TestSignalDataAccess
         //Act
         isDeleted = await _dataAccess.DeleteAsync(_lastCreatedModelId);
 
-        //Asert
+        //Assert
         Assert.That(isDeleted, Is.True, $"Failed to delete Signal with ID: '{_lastCreatedModelId}'");
     }
 
