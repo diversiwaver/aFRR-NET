@@ -129,7 +129,7 @@ public class TestSignalDataAccess
 
         //Act
 
-        //Asert
+        //Assert
         Assert.That(async () => createdId = await _dataAccess.CreateAsync(signal), Throws.Exception.TypeOf<Exception>(), $"Created signal when it should have failed!: '{createdId}'");
         await _dataAccess.DeleteAsync(createdId);
     }
