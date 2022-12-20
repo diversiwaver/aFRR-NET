@@ -1,4 +1,4 @@
-﻿namespace DataAccessLayer;
+﻿namespace BaseDataAccess;
 
 internal static class Configuration
 {

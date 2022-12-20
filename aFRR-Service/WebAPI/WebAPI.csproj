@@ -4,8 +4,9 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-	<MinVerTagPrefix>v</MinVerTagPrefix>
-	<MinVerIgnoreHeight>true</MinVerIgnoreHeight>
+	  <MinVerTagPrefix>v</MinVerTagPrefix>
+	  <MinVerIgnoreHeight>true</MinVerIgnoreHeight>
+	  <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>

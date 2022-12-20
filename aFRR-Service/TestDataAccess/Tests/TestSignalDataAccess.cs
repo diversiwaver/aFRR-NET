@@ -1,6 +1,7 @@
-using DataAccessLayer.Interfaces;
-using DataAccessLayer;
-using DataAccessLayer.Models;
+using BaseDataAccess.Interfaces;
+using BaseDataAccess;
+using BaseDataAccess.Models;
+using System.Data.SqlClient;
 
 namespace TestDataAccess.Tests;
 
@@ -35,7 +36,7 @@ public class TestSignalDataAccess
             CurrencyId = 1,
             QuantityMw = 10,
             DirectionId = 0,
-            BidId = 1
+            BidId = 0
         };
 
         //Act
@@ -80,15 +81,19 @@ public class TestSignalDataAccess
         //Arrange
         int newDirectionId = 1;
         bool isUpdated;
-        Signal signal = new()
+        Signal signal = await _dataAccess.GetAsync(_lastCreatedModelId);
+        int oldDirectionId = signal.DirectionId;
+
+        signal = new()
         {
             Id = _lastCreatedModelId,
-            FromUtc = new DateTime(2022, 12, 11, 10, 0, 0),
-            ToUtc = new DateTime(2022, 12, 11, 12, 0, 0),
-            Price = 20,
-            CurrencyId = 1,
-            QuantityMw = 10,
-            DirectionId = newDirectionId
+            FromUtc = signal.FromUtc,
+            ToUtc = signal.ToUtc,
+            Price = signal.Price,
+            CurrencyId = signal.CurrencyId,
+            QuantityMw = signal.QuantityMw,
+            DirectionId = newDirectionId,
+            BidId = signal.BidId
         };
 
         //Act
@@ -99,6 +104,7 @@ public class TestSignalDataAccess
         Assert.Multiple(() =>
         {
             Assert.That(isUpdated, Is.True, $"Failed to update Signal with ID: '{_lastCreatedModelId}'");
+            Assert.That(refoundSignal.DirectionId, Is.Not.EqualTo(oldDirectionId), $"The direction id was not changed");
             Assert.That(refoundSignal.DirectionId, Is.EqualTo(signal.DirectionId), $"Getting the updated signal from the database returned a different one.");
         });
     }
@@ -113,7 +119,58 @@ public class TestSignalDataAccess
         //Act
         isDeleted = await _dataAccess.DeleteAsync(_lastCreatedModelId);
 
-        //Asert
+        //Assert
         Assert.That(isDeleted, Is.True, $"Failed to delete Signal with ID: '{_lastCreatedModelId}'");
+    }
+
+    [Test]
+    [Order(6)]
+    public async Task SignalDataAccess_ShouldThrowException_WhenGivenEmptySignal()
+    {
+        //Arrange
+        int createdId = -1;
+        Signal signal = new() { };
+
+        //Act
+
+        //Assert
+        Assert.That(async () => createdId = await _dataAccess.CreateAsync(signal), Throws.Exception.TypeOf<Exception>(), $"Created signal when it should have failed!: '{createdId}'");
+        await _dataAccess.DeleteAsync(createdId);
+    }
+
+    [Test]
+    [Order(7)]
+    public async Task SignalDataAccess_ShouldThrowArgumentException_WhenGivenInvalidBidId()
+    {
+        //Arrange
+        int createdId = -1;
+        Signal refoundSignal;
+        Signal signal = new()
+        {
+            FromUtc = DateTime.UtcNow,
+            ToUtc = DateTime.UtcNow.AddHours(1),
+            Price = 20,
+            CurrencyId = 1,
+            QuantityMw = 10,
+            DirectionId = 0,
+            BidId = -999
+        };
+
+        //Act
+        try
+        {
+            createdId = await _dataAccess.CreateAsync(signal);
+            refoundSignal = await _dataAccess.GetAsync(createdId);
+            Assert.That(refoundSignal, Is.Null, $"Created Signal wasn't rollbacked! createdId {createdId}");
+        }
+        //Assert
+        catch (Exception ex)
+        {
+            Assert.That(ex.InnerException, Is.TypeOf<SqlException>(), $"Invalid Exception thrown with BidId -999!");
+        }
+
+        if (createdId != -1) {
+            await _dataAccess.DeleteAsync(createdId);
+        }
     }
 }

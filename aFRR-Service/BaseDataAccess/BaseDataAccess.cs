@@ -1,13 +1,11 @@
-﻿using DataAccessLayer.Attributes;
-using DataAccessLayer.Interfaces;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
 using Dapper;
-using System.Linq;
+using BaseDataAccess.Attributes;
 
-namespace DataAccessLayer.DataAccess;
+namespace BaseDataAccess;
 
-internal abstract class BaseDataAccess<T> : IBaseDataAccess<T> where T : class
+public abstract class BaseDataAccess<T> : IBaseDataAccess<T> where T : class
 {
     private readonly string _connetionString;
 
@@ -20,6 +18,27 @@ internal abstract class BaseDataAccess<T> : IBaseDataAccess<T> where T : class
     // ValueUpdates = "value1=@value1, value2=@value2"
     private string ValueUpdates => GetJoinedConditionStrings(TableColumns, prefix: "@");
 
+    protected IDbConnection CreateConnection() => new SqlConnection(_connetionString);
+
+    // The name of the table
+    protected string TableName { get; set; }
+
+    // List of all primary keys, can be multiple in compund keys
+    protected IEnumerable<string> PrimaryKeys { get; set; }
+
+    // List of all auto incrementing IDs
+    protected IEnumerable<string> AutoIncrementingIds { get; set; }
+
+    // All TableColumns, excluding any auto incrementing IDs, those can be gotten from AutoIncrementingIds and often from PrimaryKeys
+    protected IEnumerable<string> TableColumns { get; set; }
+
+    //Commands
+    protected string InsertCommand { get; set; }
+    protected string GetCommand { get; set; }
+    protected string GetAllCommand { get; set; }
+    protected string UpdateCommand { get; set; }
+    protected string DeleteCommand { get; set; }
+
     public BaseDataAccess(string connectionString)
     {
         TableName = typeof(T).Name;
@@ -30,47 +49,8 @@ internal abstract class BaseDataAccess<T> : IBaseDataAccess<T> where T : class
             .Except(AutoIncrementingIds)
             .Except(GetAllPropertyNamesWithAttribute(typeof(ExcludeFromDataAccessAttribute)));
         _connetionString = connectionString;
-
-        string condition = GetJoinedConditionStrings(PrimaryKeys, separator: " AND", prefix: "@");
-        UpdateCommand = $"UPDATE {TableName} SET {ValueUpdates} WHERE {condition};";
-
-        condition = GetJoinedConditionStrings(PrimaryKeys, separator: " AND", prefix: "@");
-        GetCommand = $"SELECT * FROM {TableName} WHERE {condition};";
-
-        GetAllCommand = $"SELECT * FROM {TableName};";
-
-        condition = GetJoinedConditionStrings(PrimaryKeys, separator: " AND", prefix: "@");
-        DeleteCommand = $"DELETE FROM {TableName} WHERE {condition};";
-
-        if (AutoIncrementingIds.Any())
-        {
-            InsertCommand = $"INSERT INTO {TableName} ({ValueNames}) OUTPUT INSERTED.Id VALUES ({ValueParameters});";
-        }
-        else
-        {
-            InsertCommand = $"INSERT INTO {TableName} ({ValueNames}) VALUES ({ValueParameters});";
-        }
+        PrepareSQLCommands();
     }
-    private protected IDbConnection CreateConnection() => new SqlConnection(_connetionString);
-
-    // The name of the table
-    private protected string TableName { get; set; }
-
-    // List of all primary keys, can be multiple in compund keys
-    private protected IEnumerable<string> PrimaryKeys { get; set; }
-
-    // List of all auto incrementing IDs
-    private protected IEnumerable<string> AutoIncrementingIds { get; set; }
-
-    // All TableColumns, excluding any auto incrementing IDs, those can be gotten from AutoIncrementingIds and often from PrimaryKeys
-    private protected IEnumerable<string> TableColumns { get; set; }
-
-    //Commands
-    private protected string InsertCommand { get; set; }
-    private protected string GetCommand { get; set; }
-    private protected string GetAllCommand { get; set; }
-    private protected string UpdateCommand { get; set; }
-    private protected string DeleteCommand { get; set; }
 
     public virtual async Task<int> CreateAsync(T entity)
     {
@@ -175,7 +155,7 @@ internal abstract class BaseDataAccess<T> : IBaseDataAccess<T> where T : class
         }
     }
 
-    private static IEnumerable<string> GetAllPropertyNamesWithAttribute(Type attribute)
+    private IEnumerable<string> GetAllPropertyNamesWithAttribute(Type attribute)
     {
         return typeof(T).GetProperties()
             .Where(property => Attribute.IsDefined(property, attribute) == true)
@@ -197,5 +177,28 @@ internal abstract class BaseDataAccess<T> : IBaseDataAccess<T> where T : class
     {
         return string.Join($"{separator} ",
             values1.Zip(values2, (value1, value2) => value1 + $"={prefix}" + value2));
+    }
+
+    private void PrepareSQLCommands()
+    {
+        string condition = GetJoinedConditionStrings(PrimaryKeys, separator: " AND", prefix: "@");
+        UpdateCommand = $"UPDATE {TableName} SET {ValueUpdates} WHERE {condition};";
+
+        condition = GetJoinedConditionStrings(PrimaryKeys, separator: " AND", prefix: "@");
+        GetCommand = $"SELECT * FROM {TableName} WHERE {condition};";
+
+        GetAllCommand = $"SELECT * FROM {TableName};";
+
+        condition = GetJoinedConditionStrings(PrimaryKeys, separator: " AND", prefix: "@");
+        DeleteCommand = $"DELETE FROM {TableName} WHERE {condition};";
+
+        if (AutoIncrementingIds.Any())
+        {
+            InsertCommand = $"INSERT INTO {TableName} ({ValueNames}) OUTPUT INSERTED.Id VALUES ({ValueParameters});";
+        }
+        else
+        {
+            InsertCommand = $"INSERT INTO {TableName} ({ValueNames}) VALUES ({ValueParameters});";
+        }
     }
 }

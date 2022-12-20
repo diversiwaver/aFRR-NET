@@ -1,11 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	<MinVerTagPrefix>v</MinVerTagPrefix>
-	<MinVerIgnoreHeight>true</MinVerIgnoreHeight>
+	  <MinVerTagPrefix>v</MinVerTagPrefix>
+	  <MinVerIgnoreHeight>true</MinVerIgnoreHeight>
+	  <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
