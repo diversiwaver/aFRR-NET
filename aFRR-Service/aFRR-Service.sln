@@ -5,7 +5,7 @@ VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageConsumer", "MessageConsumer\MessageConsumer.csproj", "{C4C8CDC0-376A-43DE-8FE0-137A0FC4493E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLayer", "DataAccess\DataAccessLayer.csproj", "{8589B063-BE33-43E3-B535-532A8DDE5278}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccessLayer.csproj", "{8589B063-BE33-43E3-B535-532A8DDE5278}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csproj", "{EDEE3671-C2C7-4C8D-9EC8-79DEADCF3A41}"
 EndProject

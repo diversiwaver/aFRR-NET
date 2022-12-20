@@ -4,8 +4,8 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	<MinVerTagPrefix>v</MinVerTagPrefix>
-	<MinVerIgnoreHeight>true</MinVerIgnoreHeight>
+	  <MinVerTagPrefix>v</MinVerTagPrefix>
+	  <MinVerIgnoreHeight>true</MinVerIgnoreHeight>
 	  <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -14,7 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.0.123" />
     <PackageReference Include="MinVer" Version="4.2.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
