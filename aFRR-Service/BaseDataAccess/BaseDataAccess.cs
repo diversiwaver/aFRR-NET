@@ -28,26 +28,7 @@ public abstract class BaseDataAccess<T> : IBaseDataAccess<T> where T : class
             .Except(AutoIncrementingIds)
             .Except(GetAllPropertyNamesWithAttribute(typeof(ExcludeFromDataAccessAttribute)));
         _connetionString = connectionString;
-
-        string condition = GetJoinedConditionStrings(PrimaryKeys, separator: " AND", prefix: "@");
-        UpdateCommand = $"UPDATE {TableName} SET {ValueUpdates} WHERE {condition};";
-
-        condition = GetJoinedConditionStrings(PrimaryKeys, separator: " AND", prefix: "@");
-        GetCommand = $"SELECT * FROM {TableName} WHERE {condition};";
-
-        GetAllCommand = $"SELECT * FROM {TableName};";
-
-        condition = GetJoinedConditionStrings(PrimaryKeys, separator: " AND", prefix: "@");
-        DeleteCommand = $"DELETE FROM {TableName} WHERE {condition};";
-
-        if (AutoIncrementingIds.Any())
-        {
-            InsertCommand = $"INSERT INTO {TableName} ({ValueNames}) OUTPUT INSERTED.Id VALUES ({ValueParameters});";
-        }
-        else
-        {
-            InsertCommand = $"INSERT INTO {TableName} ({ValueNames}) VALUES ({ValueParameters});";
-        }
+        PrepareSQLCommands();
     }
     protected IDbConnection CreateConnection() => new SqlConnection(_connetionString);
 
@@ -195,5 +176,28 @@ public abstract class BaseDataAccess<T> : IBaseDataAccess<T> where T : class
     {
         return string.Join($"{separator} ",
             values1.Zip(values2, (value1, value2) => value1 + $"={prefix}" + value2));
+    }
+
+    private static void PrepareSQLCommands()
+    {
+        string condition = GetJoinedConditionStrings(PrimaryKeys, separator: " AND", prefix: "@");
+        UpdateCommand = $"UPDATE {TableName} SET {ValueUpdates} WHERE {condition};";
+
+        condition = GetJoinedConditionStrings(PrimaryKeys, separator: " AND", prefix: "@");
+        GetCommand = $"SELECT * FROM {TableName} WHERE {condition};";
+
+        GetAllCommand = $"SELECT * FROM {TableName};";
+
+        condition = GetJoinedConditionStrings(PrimaryKeys, separator: " AND", prefix: "@");
+        DeleteCommand = $"DELETE FROM {TableName} WHERE {condition};";
+
+        if (AutoIncrementingIds.Any())
+        {
+            InsertCommand = $"INSERT INTO {TableName} ({ValueNames}) OUTPUT INSERTED.Id VALUES ({ValueParameters});";
+        }
+        else
+        {
+            InsertCommand = $"INSERT INTO {TableName} ({ValueNames}) VALUES ({ValueParameters});";
+        }
     }
 }
