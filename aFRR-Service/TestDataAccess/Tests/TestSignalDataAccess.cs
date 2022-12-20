@@ -159,7 +159,7 @@ public class TestSignalDataAccess
             refoundSignal = await _dataAccess.GetAsync(createdId);
             Assert.That(refoundSignal, Is.Null, $"Created Signal wasn't rollbacked! createdId {createdId}");
         }
-        //Asert
+        //Assert
         catch (Exception ex)
         {
             Assert.That(ex.InnerException, Is.TypeOf<SqlException>(), $"Invalid Exception thrown with BidId -999!");
