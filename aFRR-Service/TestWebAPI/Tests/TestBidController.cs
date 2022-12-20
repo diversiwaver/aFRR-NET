@@ -22,24 +22,31 @@ public class TestBidController
     public async Task BidsController_ShouldReturnBidDtoIdAndStatusCode200_WhenGettingValidBidId()
     {
         //Arrange
+
         //Act
         var actionResult = (await _webApiController.GetByIdAsync(0)).Result;
-        Assert.That(actionResult, Is.Not.Null, "Action result was null");
-        if (actionResult is ObjectResult objRes)
+
+        //Assert
+        try
         {
-            //Assert
-            BidDTO? bid = objRes.Value as BidDTO;
-            Assert.Multiple(() =>
+            if (actionResult is ObjectResult objRes)
             {
-                Assert.That(objRes.StatusCode, Is.EqualTo(200), "Status code returned was not 200");
-                Assert.That(bid, Is.Not.Null, "Returned Bid was null");
-                Assert.That(bid.Id, Is.EqualTo(0), "Bid id didn't match");
-            });
+                BidDTO? bid = objRes.Value as BidDTO;
+                Assert.Multiple(() =>
+                {
+                    Assert.That(objRes.StatusCode, Is.EqualTo(200), "Status code returned was not 200");
+                    Assert.That(bid, Is.Not.Null, "Returned Bid was null");
+                    Assert.That(bid.Id, Is.EqualTo(0), "Bid id didn't match");
+                });
+            }
+            else if (actionResult is StatusCodeResult scr)
+            {
+                Assert.That(scr.StatusCode, Is.EqualTo(200));
+            }
         }
-        else if (actionResult is StatusCodeResult scr)
+        catch
         {
-            //Assert
-            Assert.That(scr.StatusCode, Is.EqualTo(200));
+            Assert.Fail("Action result was null");
         }
     }
 
