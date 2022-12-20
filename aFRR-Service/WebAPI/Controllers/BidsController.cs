@@ -44,6 +44,7 @@ public class BidsController : ControllerBase
         _logger.LogInformation("GetAllAsync method called.");
         IEnumerable<Bid> bids = await _bidDataAccess.GetAllAsync();
         _logger.LogInformation("Finished getting {Count} bids from data access layer.", bids.Count());
+        
         IEnumerable<BidDTO> bidDtos = DTOConverter<Bid, BidDTO>.FromList(bids);
         _logger.LogInformation("Converted {Count} Bids to BidDTOs", bidDtos.Count());
         return Ok(bidDtos);
