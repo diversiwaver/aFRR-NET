@@ -77,7 +77,7 @@ public class TestBidDataAccess
     public async Task BidDataAccess_ShouldReturnTrueAndTheNewBid_WhenUpdatingAndGettingBid()
     {
         //Arrange
-        int newPrice = 20;
+        int newQuantity = 20;
         bool isUpdated;
         Bid bid = new()
         {
@@ -85,7 +85,7 @@ public class TestBidDataAccess
             ExternalId = new Guid(),
             FromUtc = new DateTime(2022, 12, 11, 10, 0, 0),
             ToUtc = new DateTime(2022, 12, 11, 12, 0, 0),
-            QuantityMw = newPrice,
+            QuantityMw = newQuantity,
             Price = 20,
             CurrencyId = 0
         };
