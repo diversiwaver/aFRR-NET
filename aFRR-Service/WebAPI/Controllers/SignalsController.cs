@@ -59,7 +59,8 @@ public class SignalsController : ControllerBase
         _logger.LogInformation("Getting all signals async.");
         IEnumerable<Signal> signals = await _signalDataAccess.GetAllAsync();
         _logger.LogInformation("Retrieved {Count} signals from the database.", signals.Count());
-        _logger.LogInformation("Converting Signal to SignalDTO.");
+       
+         _logger.LogInformation("Converting Signal to SignalDTO.");
         IEnumerable<SignalDTO> signalDtos = DTOConverter<Signal, SignalDTO>.FromList(signals);
         _logger.LogInformation("Converted {Count} signals to SignalDTO objects.", signalDtos.Count());
         _logger.LogInformation("Finished getting all signals.");
