@@ -18,18 +18,6 @@ public abstract class BaseDataAccess<T> : IBaseDataAccess<T> where T : class
     // ValueUpdates = "value1=@value1, value2=@value2"
     private string ValueUpdates => GetJoinedConditionStrings(TableColumns, prefix: "@");
 
-    public BaseDataAccess(string connectionString)
-    {
-        TableName = typeof(T).Name;
-        AutoIncrementingIds = GetAllPropertyNamesWithAttribute(typeof(IsAutoIncrementingIDAttribute));
-        PrimaryKeys = GetAllPropertyNamesWithAttribute(typeof(IsPrimaryKeyAttribute));
-        TableColumns = typeof(T).GetProperties()
-            .Select(property => property.Name)
-            .Except(AutoIncrementingIds)
-            .Except(GetAllPropertyNamesWithAttribute(typeof(ExcludeFromDataAccessAttribute)));
-        _connetionString = connectionString;
-        PrepareSQLCommands();
-    }
     protected IDbConnection CreateConnection() => new SqlConnection(_connetionString);
 
     // The name of the table
@@ -50,6 +38,19 @@ public abstract class BaseDataAccess<T> : IBaseDataAccess<T> where T : class
     protected string GetAllCommand { get; set; }
     protected string UpdateCommand { get; set; }
     protected string DeleteCommand { get; set; }
+
+    public BaseDataAccess(string connectionString)
+    {
+        TableName = typeof(T).Name;
+        AutoIncrementingIds = GetAllPropertyNamesWithAttribute(typeof(IsAutoIncrementingIDAttribute));
+        PrimaryKeys = GetAllPropertyNamesWithAttribute(typeof(IsPrimaryKeyAttribute));
+        TableColumns = typeof(T).GetProperties()
+            .Select(property => property.Name)
+            .Except(AutoIncrementingIds)
+            .Except(GetAllPropertyNamesWithAttribute(typeof(ExcludeFromDataAccessAttribute)));
+        _connetionString = connectionString;
+        PrepareSQLCommands();
+    }
 
     public virtual async Task<int> CreateAsync(T entity)
     {
@@ -154,7 +155,7 @@ public abstract class BaseDataAccess<T> : IBaseDataAccess<T> where T : class
         }
     }
 
-    private static IEnumerable<string> GetAllPropertyNamesWithAttribute(Type attribute)
+    private IEnumerable<string> GetAllPropertyNamesWithAttribute(Type attribute)
     {
         return typeof(T).GetProperties()
             .Where(property => Attribute.IsDefined(property, attribute) == true)
@@ -178,7 +179,7 @@ public abstract class BaseDataAccess<T> : IBaseDataAccess<T> where T : class
             values1.Zip(values2, (value1, value2) => value1 + $"={prefix}" + value2));
     }
 
-    private static void PrepareSQLCommands()
+    private void PrepareSQLCommands()
     {
         string condition = GetJoinedConditionStrings(PrimaryKeys, separator: " AND", prefix: "@");
         UpdateCommand = $"UPDATE {TableName} SET {ValueUpdates} WHERE {condition};";
