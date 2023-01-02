@@ -2,11 +2,11 @@
 
 namespace MessageConsumer.Consumers;
 
-public class TsoConsumer : IConsumer<TSOSignal>
+public class TsoSignalConsumer : IConsumer<TSOSignal>
 {
-    private readonly ILogger<TsoConsumer> _logger;
+    private readonly ILogger<TsoSignalConsumer> _logger;
 
-    public TsoConsumer(ILogger<TsoConsumer> logger)
+    public TsoSignalConsumer(ILogger<TsoSignalConsumer> logger)
     {
         _logger = logger;
     }

@@ -8,7 +8,7 @@ IHost host = Host.CreateDefaultBuilder(args)
         services.AddMassTransit(x =>
         {
             // [1] Uncomment, as well as [2], in case you want to debug and consume your own messages
-            x.AddConsumer<TsoConsumer>(c =>
+            x.AddConsumer<TsoSignalConsumer>(c =>
             {
                 c.UseConcurrencyLimit(1);
                 c.UseMessageRetry(f => f.Intervals(TimeSpan.FromMilliseconds(250), TimeSpan.FromMilliseconds(500), TimeSpan.FromMilliseconds(1000)));
@@ -20,15 +20,15 @@ IHost host = Host.CreateDefaultBuilder(args)
                     h.Password(host.Configuration["RabbitMQPassword"]);
                 });
                 // [2] Uncomment, as well as [1] in case you want to debug and consume your own messages
-                cfg.ReceiveEndpoint("tso-signal-list", x =>
+                cfg.ReceiveEndpoint("tso-signal-list", configurator =>
                 {
-                    x.ConfigureConsumeTopology = false;
-                    x.Bind("TSOMessageHub.XML:TSOSignal", s =>
+                    configurator.ConfigureConsumeTopology = false;
+                    configurator.Bind("TSOMessageHub.XML:TSOSignal", s =>
                     {
                         s.RoutingKey = "TSOSignal";
                         s.ExchangeType = ExchangeType.Topic;
                     });
-                    x.ConfigureConsumer<TsoConsumer>(context);
+                    configurator.ConfigureConsumer<TsoSignalConsumer>(context);
                 });
                 cfg.ConfigureEndpoints(context);
             });
