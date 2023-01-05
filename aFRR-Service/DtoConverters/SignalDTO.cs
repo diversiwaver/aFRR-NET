@@ -1,4 +1,6 @@
-﻿namespace WebAPI.DTOs;
+﻿using aFRRService.DTOs;
+
+namespace WebAPI.DTOs;
 
 public class SignalDTO
 {
@@ -10,4 +12,5 @@ public class SignalDTO
     public decimal QuantityMw { get; set; }
     public int DirectionId { get; set; }
     public int BidId { get; set; }
+    public IEnumerable<AssetDTO>? AssetsToRegulate { get; set; }
 }
