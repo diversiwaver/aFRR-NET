@@ -1,5 +1,5 @@
 using BaseDataAccess;
-using BaseDataAccess.Interfaces;
+using DataAccessLayer.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,6 +1,7 @@
-﻿using BaseDataAccess.Models;
+﻿using BaseDataAccess;
+using BaseDataAccess.Models;
 
-namespace BaseDataAccess.Interfaces;
+namespace DataAccessLayer.Interfaces;
 
 public interface IBidDataAccess : IBaseDataAccess<Bid>
 {

@@ -1,10 +1,19 @@
-﻿using MassTransit;
+﻿using BaseDataAccess;
+using DataAccessLayer.Interfaces;
+using MassTransit;
 using MessageConsumer.Consumers;
 using RabbitMQ.Client;
 
 IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((host, services) =>
     {
+        string? connectionString = host.Configuration.GetConnectionString("DefaultConnection");
+        if (connectionString is null)
+        {
+            // TODO: Log an error when retrieving the connection string
+            throw new ArgumentNullException(nameof(connectionString), "Failed to retrieve connection string. Is it defined in the configuration?");
+        }
+        services.AddScoped((dataAccess) => DataAccessFactory.GetDataAccess<ISignalDataAccess>(connectionString));
         services.AddMassTransit(x =>
         {
             // [1] Uncomment, as well as [2], in case you want to debug and consume your own messages

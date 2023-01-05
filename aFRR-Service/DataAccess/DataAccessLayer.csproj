@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BaseDataAccess\BaseDataAccess.csproj" />
+    <ProjectReference Include="..\DtoConverters\aFRRService.DTOs.csproj" />
   </ItemGroup>
 
 </Project>

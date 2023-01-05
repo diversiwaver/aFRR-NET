@@ -1,4 +1,4 @@
-using BaseDataAccess.Interfaces;
+using DataAccessLayer.Interfaces;
 using BaseDataAccess;
 using BaseDataAccess.Models;
 using System.Data.SqlClient;

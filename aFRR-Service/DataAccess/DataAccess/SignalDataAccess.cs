@@ -1,4 +1,4 @@
-﻿using BaseDataAccess.Interfaces;
+﻿using DataAccessLayer.Interfaces;
 using BaseDataAccess.Models;
 
 namespace BaseDataAccess.DataAccess;

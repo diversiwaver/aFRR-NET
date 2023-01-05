@@ -1,6 +1,6 @@
 ﻿using aFRRService.DTOs;
 using aFRRService.DTOs.DTOConverters;
-using BaseDataAccess.Interfaces;
+using DataAccessLayer.Interfaces;
 using BaseDataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
 
