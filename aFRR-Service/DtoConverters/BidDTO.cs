@@ -1,4 +1,4 @@
-﻿namespace WebAPI.DTOs;   
+﻿namespace aFRRService.DTOs;
 
 public class BidDTO
 {
