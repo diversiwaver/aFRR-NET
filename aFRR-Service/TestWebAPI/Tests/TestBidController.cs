@@ -1,10 +1,10 @@
 ﻿using WebAPI.Controllers;
 using TestWebAPI.Stubs;
-using WebAPI.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework.Internal;
 using Microsoft.Extensions.Logging;
 using Moq;
+using aFRRService.DTOs;
 
 namespace TestWebAPI.Tests;
 

@@ -1,6 +1,4 @@
-﻿using aFRRService.DTOs;
-
-namespace WebAPI.DTOs;
+﻿namespace aFRRService.DTOs;
 
 public class SignalDTO
 {

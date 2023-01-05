@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace WebAPI.DTOs.DTOConverters;
+namespace aFRRService.DTOs.DTOConverters;
 
 public static class DTOConverter<T, U>
 {
