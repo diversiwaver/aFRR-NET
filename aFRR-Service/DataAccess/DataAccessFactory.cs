@@ -21,6 +21,7 @@ public static class DataAccessFactory
         switch (typeof(T).Name)
         {
             case "IPrioritizationDataAccess": return new PrioritizationDataAccess(client) as T;
+            case "IRemoteControlDataAccess": return new RemoteControlDataAccess(client) as T;
             default:
                 throw new ArgumentException($"Unknown type {typeof(T).FullName}");
         }
