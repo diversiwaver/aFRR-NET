@@ -5,7 +5,7 @@ using DataAccessLayer.DataAccess;
 namespace DataAccessLayer;
 public static class DataAccessFactory
 {
-    public static T GetDataAccess<T>(string connectionString) where T : class, IBaseDataAccess<T>
+    public static T GetDataAccess<T>(string connectionString) where T : class
     {
         switch (typeof(T).Name)
         {
@@ -20,7 +20,7 @@ public static class DataAccessFactory
     {
         switch (typeof(T).Name)
         {
-            case "IPrioritizationDataAcces": return new PrioritizationDataAccess(client) as T;
+            case "IPrioritizationDataAccess": return new PrioritizationDataAccess(client) as T;
             default:
                 throw new ArgumentException($"Unknown type {typeof(T).FullName}");
         }

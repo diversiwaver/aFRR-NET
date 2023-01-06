@@ -3,7 +3,7 @@ using aFRRService.DTOs;
 
 namespace DataAccessLayer.Interfaces;
 
-internal interface IPrioritizationDataAccess
+public interface IPrioritizationDataAccess
 {
     Task<SignalDTO> GetAsync(SignalDTO signalDTO);
 }
