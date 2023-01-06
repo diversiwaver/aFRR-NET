@@ -155,7 +155,7 @@ internal class AssetDTOComparer : IEqualityComparer<AssetDTO>
             && x.RegulationPercentage == y.RegulationPercentage;
     }
 
-    public int GetHashCode(aFRRService.DTOs.AssetDTO obj)
+    public int GetHashCode(AssetDTO obj)
     {
         // Return a consistent value for objects with the same values
         return obj.Id.GetHashCode()
