@@ -1,4 +1,7 @@
-﻿using MassTransit;
+﻿using BaseDataAccess.Interfaces;
+using DataAccessLayer;
+using DataAccessLayer.Interfaces;
+using MassTransit;
 using MessageConsumer.Consumers;
 using RabbitMQ.Client;
 
@@ -33,6 +36,12 @@ IHost host = Host.CreateDefaultBuilder(args)
                 cfg.ConfigureEndpoints(context);
             });
         });
+        HttpClient prioritizationClient = new HttpClient() { BaseAddress = new Uri(host.Configuration["PrioritizationUri"]) };
+        HttpClient remoteControlClient = new HttpClient() { BaseAddress = new Uri(host.Configuration["RemoteControlUri"]) };
+
+        services.AddScoped((dataAccess) => DataAccessFactory.GetDataAccess<IPrioritizationDataAccess>(prioritizationClient));
+        services.AddScoped((dataAccess) => DataAccessFactory.GetDataAccess<IRemoteControlDataAccess>(remoteControlClient));
+        services.AddScoped((dataAccess) => DataAccessFactory.GetDataAccess<ISignalDataAccess>(host.Configuration.GetConnectionString("DefaultConnection")));
     })
     .Build();
 
