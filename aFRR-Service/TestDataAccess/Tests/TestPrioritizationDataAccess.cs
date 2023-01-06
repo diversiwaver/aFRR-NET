@@ -136,7 +136,7 @@ internal class TestPrioritizationDataAccess
 
 internal class AssetDTOComparer : IEqualityComparer<AssetDTO>
 {
-    public bool Equals(aFRRService.DTOs.AssetDTO x, aFRRService.DTOs.AssetDTO y)
+    public bool Equals(AssetDTO x, AssetDTO y)
     {
         if (ReferenceEquals(x, y))
         {
