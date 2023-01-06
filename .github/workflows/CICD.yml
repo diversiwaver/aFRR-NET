@@ -19,6 +19,8 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '7.x.x'
+      - name: Add NuGet Private Source
+        run: dotnet nuget add source --username diversiwaver --password "${{secrets.NUGET_ACCESS_TOKEN}}" --store-password-in-clear-text --name githubNuget "https://nuget.pkg.github.com/diversiwaver/index.json"
       - name: Build
         shell: bash
         run: |
