@@ -9,5 +9,5 @@ internal static class Configuration
         "User ID=dmai0920_1086320;" +
         "Password=Password1!";
     internal const string PRIORITIZATION_API_URI =
-        "https://localhost:7208/api/prioritization";
+        "https://localhost:7208";
 }

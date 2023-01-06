@@ -21,11 +21,21 @@ namespace DataAccessLayer.DataAccess
         public async Task<SignalDTO> GetAsync(SignalDTO signalDTO)
         {
             var serializedDTO = JsonSerializer.Serialize(signalDTO);
-            var jsonResponse = await _client.GetAsync(serializedDTO);
+            var content = new StringContent(serializedDTO, Encoding.UTF8, "application/json");
+
+            using var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri("/api/prioritization", UriKind.Relative),
+                Content = content
+            };
+
+            var jsonResponse = await _client.SendAsync(request);
             if (jsonResponse.IsSuccessStatusCode)
             {   
-                var response = await jsonResponse.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<SignalDTO>(response);
+                var serializedResponse = await jsonResponse.Content.ReadAsStringAsync();
+                var deserializedResponse = JsonSerializer.Deserialize<SignalDTO>(serializedResponse);
+                return deserializedResponse;
             }
             else
             {
