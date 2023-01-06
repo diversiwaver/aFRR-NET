@@ -3,7 +3,7 @@ using BaseDataAccess.DataAccess;
 using DataAccessLayer.DataAccess;
 
 namespace DataAccessLayer;
-public class DataAccessFactory
+public static class DataAccessFactory
 {
     public static T GetDataAccess<T>(string connectionString) where T : class, IBaseDataAccess<T>
     {
