@@ -1,7 +1,7 @@
 using BaseDataAccess.Interfaces;
-using BaseDataAccess;
 using BaseDataAccess.Models;
 using System.Data.SqlClient;
+using DataAccessLayer;
 
 namespace TestDataAccess.Tests;
 

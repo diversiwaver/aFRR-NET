@@ -8,4 +8,6 @@ internal static class Configuration
         "Persist Security Info=True;" +
         "User ID=dmai0920_1086320;" +
         "Password=Password1!";
+    internal const string PRIORITIZATION_API_URI =
+        "https://localhost:7208";
 }
