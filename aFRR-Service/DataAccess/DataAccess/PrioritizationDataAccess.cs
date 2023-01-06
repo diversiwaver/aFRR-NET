@@ -21,7 +21,7 @@ namespace DataAccessLayer.DataAccess
         public async Task<SignalDTO> GetAsync(SignalDTO signalDTO)
         {
             var serializedDTO = JsonSerializer.Serialize(signalDTO);
-            var content = new StringContent(serializedDTO, Encoding.UTF8, "application/json");
+            StringContent content = new StringContent(serializedDTO, Encoding.UTF8, "application/json");
 
             using var request = new HttpRequestMessage
             {
