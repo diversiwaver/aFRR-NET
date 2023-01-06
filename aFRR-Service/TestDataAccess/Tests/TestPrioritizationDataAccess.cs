@@ -134,7 +134,7 @@ internal class TestPrioritizationDataAccess
     }
 }
 
-internal class AssetDTOComparer : IEqualityComparer<aFRRService.DTOs.AssetDTO>
+internal class AssetDTOComparer : IEqualityComparer<AssetDTO>
 {
     public bool Equals(aFRRService.DTOs.AssetDTO x, aFRRService.DTOs.AssetDTO y)
     {
