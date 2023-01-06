@@ -97,7 +97,7 @@ internal class TestPrioritizationDataAccess
             BidId = 0,
         };
 
-        var expectedAssetsToRegulate = new List<AssetDTO>
+        IEnumerable<AssetDTO> expectedAssetsToRegulate = new List<AssetDTO>
         {
             new AssetDTO 
             { 
