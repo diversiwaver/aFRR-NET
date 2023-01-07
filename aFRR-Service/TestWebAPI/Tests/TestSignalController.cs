@@ -21,7 +21,7 @@ public class TestSignalController
     public async Task SignalsController_ShouldReturnCreatedSignalId()
     {
         //Arrange
-        SignalDTO newSignalDto = new() { Id = 0, CurrencyId = 0, FromUtc = new DateTime(2022, 12, 12, 10, 00, 0), ToUtc = new DateTime(2022, 12, 12, 11, 00, 0), Price = 15, QuantityMw = 10, DirectionId = 0, BidId = 0 };
+        SignalDTO newSignalDto = new() { Id = 0, ReceivedUtc = new DateTime(2022, 12, 12, 10, 00, 0), SentUtc = new DateTime(2022, 12, 12, 11, 00, 0), QuantityMw = 10, BidId = 0 };
         //Act
         var idActionResult = (await _webApiController.PostAsync(newSignalDto)).Result;
         if (idActionResult is ObjectResult objRes)

@@ -38,9 +38,9 @@ public class TsoSignalConsumer : IConsumer<TSOSignal>
             {
                 Id = tsoSignal.SignalId,
                 BidId = Int32.Parse(tsoSignal.BidId),
-                FromUtc = DateTime.Parse(tsoSignal.ReceivedUTC),
+                ReceivedUtc = DateTime.Parse(tsoSignal.ReceivedUTC),
                 QuantityMw = Math.Abs(tsoSignal.QuantityMw),
-                DirectionId = tsoSignal.QuantityMw > 0 ? 0 : 1
+                Direction = tsoSignal.QuantityMw > 0 ? Direction.Up : Direction.Down
             };
 
             signalDTO = await _prioritizationDataAccess.GetAsync(signalDTO);
@@ -69,8 +69,9 @@ public class TsoSignalConsumer : IConsumer<TSOSignal>
             return;
         }
 
-        signalDTO.ToUtc = DateTime.UtcNow;
+        signalDTO.SentUtc = DateTime.UtcNow;
         Signal signal = DTOConverter<SignalDTO, Signal>.From(signalDTO);
+        signal.DirectionId = (int)signalDTO.Direction;
         int signalId = await _signalDataAccess.CreateAsync(signal);
         
 

@@ -11,7 +11,7 @@ internal class SignalDataAccess : BaseDataAccess<Signal>, ISignalDataAccess
 
             BEGIN TRANSACTION; 
 
-            INSERT INTO Signal (FromUtc, ToUtc, Price, CurrencyId, QuantityMw, DirectionId) OUTPUT INSERTED.Id VALUES (@FromUtc, @ToUtc, @Price, @CurrencyId, @QuantityMw, @DirectionId);
+            INSERT INTO Signal (ReceivedUtc, SentUtc, QuantityMw, DirectionId) OUTPUT INSERTED.Id VALUES (@ReceivedUtc, @SentUtc, @QuantityMw, @DirectionId);
 
             DECLARE @GeneratedId INT;
             SET @GeneratedId = SCOPE_IDENTITY();
