@@ -24,10 +24,10 @@ internal class TestPrioritizationDataAccess
         string signalDTOStringContent = """
             {
                 "id": 1,
-                "ReceivedUtc": "2023-01-04T12:16:56.28Z",
-                "SentUtc": "2023-01-04T12:16:56.28Z",
+                "receivedUtc": "2023-01-04T12:16:56.28Z",
+                "sentUtc": "2023-01-04T12:16:56.28Z",
                 "quantityMw": 20,
-                "Direction": 0,
+                "direction": 0,
                 "bidId": 0,
                 "assetsToRegulate": [
                     {

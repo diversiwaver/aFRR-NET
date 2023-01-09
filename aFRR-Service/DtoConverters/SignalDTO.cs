@@ -7,10 +7,10 @@ public class SignalDTO
     [JsonPropertyName ("id")]
     public int Id { get; set; }
 
-    [JsonPropertyName("ReceivedUtc")]
+    [JsonPropertyName("receivedUtc")]
     public DateTime ReceivedUtc { get; set; }
 
-    [JsonPropertyName("SentUtc")]
+    [JsonPropertyName("sentUtc")]
     public DateTime SentUtc { get; set; }
 
     [JsonPropertyName("quantityMw")]
