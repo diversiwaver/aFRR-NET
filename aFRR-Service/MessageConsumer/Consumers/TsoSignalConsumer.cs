@@ -29,58 +29,33 @@ public class TsoSignalConsumer : IConsumer<TSOSignal>
     public async Task Consume(ConsumeContext<TSOSignal> context)
     {
         var tsoSignal = context.Message;
-        SignalDTO signalDTO = new();
-
-        //TODO: split in different try catches and make error handling more specific
+        SignalDTO signalDTO = new()
+        {
+            Id = tsoSignal.SignalId,
+            BidId = Int32.Parse(tsoSignal.BidId),
+            FromUtc = DateTime.TryParse(tsoSignal.ReceivedUTC, out var fromUtc) ? fromUtc : DateTime.UtcNow,
+            QuantityMw = Math.Abs(tsoSignal.QuantityMw),
+            DirectionId = tsoSignal.QuantityMw > 0 ? 0 : 1
+        };
+        
         try
         {
-            signalDTO = new()
-            {
-                Id = tsoSignal.SignalId,
-                BidId = Int32.Parse(tsoSignal.BidId),
-                ReceivedUtc = DateTime.Parse(tsoSignal.ReceivedUTC),
-                QuantityMw = Math.Abs(tsoSignal.QuantityMw),
-                Direction = tsoSignal.QuantityMw > 0 ? Direction.Up : Direction.Down
-            };
-
             signalDTO = await _prioritizationDataAccess.GetAsync(signalDTO);
-            
-        }
-        catch(Exception ex)
-        {
-            _logger.LogError("Failed to create SignalDTO");
-            _logger.LogDebug("{Message}", ex.Message);
-            return;
-        }
-
-        try
-        {
             bool signalSent = await _remoteControlDataAccess.SendAsync(signalDTO);
-            if (!signalSent)
+            if (signalSent is false)
             {
                 _logger.LogError("Failed to send the SignalDTO to the RemoteControlAPI");
                 return;
             }
+            signalDTO.ToUtc = DateTime.UtcNow;
+            Signal signal = DTOConverter<SignalDTO, Signal>.From(signalDTO);
+            await _signalDataAccess.CreateAsync(signal);
         }
         catch(Exception ex)
         {
-            _logger.LogError("Failed to send the SignalDTO to the RemoteControlAPI");
+            _logger.LogError("Failed to consume Signal with id {id}", signalDTO.Id);
             _logger.LogDebug("{Message}", ex.Message);
-            return;
         }
-
-        signalDTO.SentUtc = DateTime.UtcNow;
-        Signal signal = DTOConverter<SignalDTO, Signal>.From(signalDTO);
-        signal.DirectionId = (int)signalDTO.Direction;
-        int signalId = await _signalDataAccess.CreateAsync(signal);
-        
-
-
-
-        _logger.LogInformation("Message Sent at: {Time}", context.Message.ReceivedUTC);
-        _logger.LogInformation("Received a new message with id: {Id} and Quantity: {Quantity}", context.Message.SignalId, context.Message.QuantityMw);
-        _logger.LogInformation("Current Time: {Time}", DateTimeOffset.Now.ToString("dd-MM-yyyy HH:mm:ss.fff"));
-
     }
 }
 
