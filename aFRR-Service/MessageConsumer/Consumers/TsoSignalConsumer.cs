@@ -42,14 +42,16 @@ public class TsoSignalConsumer : IConsumer<TSOSignal>
         {
             signalDTO = await _prioritizationDataAccess.GetAsync(signalDTO);
             bool signalSent = await _remoteControlDataAccess.SendAsync(signalDTO);
-            if (signalSent is false)
+            if (signalSent)
+            {
+                signalDTO.SentUtc = DateTime.UtcNow;
+                Signal signal = DTOConverter<SignalDTO, Signal>.From(signalDTO);
+                await _signalDataAccess.CreateAsync(signal);
+            }
+            else
             {
                 _logger.LogError("Failed to send the SignalDTO to the RemoteControlAPI");
-                return;
             }
-            signalDTO.SentUtc = DateTime.UtcNow;
-            Signal signal = DTOConverter<SignalDTO, Signal>.From(signalDTO);
-            await _signalDataAccess.CreateAsync(signal);
         }
         catch(Exception ex)
         {
