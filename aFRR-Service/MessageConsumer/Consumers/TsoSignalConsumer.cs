@@ -46,6 +46,7 @@ public class TsoSignalConsumer : IConsumer<TSOSignal>
             {
                 signalDTO.SentUtc = DateTime.UtcNow;
                 Signal signal = DTOConverter<SignalDTO, Signal>.From(signalDTO);
+                signal.DirectionId = signalDTO.Direction == Direction.Up ? 0 : 1;
                 await _signalDataAccess.CreateAsync(signal);
             }
             else
