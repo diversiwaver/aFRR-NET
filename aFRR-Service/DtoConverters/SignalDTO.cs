@@ -7,23 +7,17 @@ public class SignalDTO
     [JsonPropertyName ("id")]
     public int Id { get; set; }
 
-    [JsonPropertyName("fromUtc")]
-    public DateTime FromUtc { get; set; }
+    [JsonPropertyName("receivedUtc")]
+    public DateTime ReceivedUtc { get; set; }
 
-    [JsonPropertyName("toUtc")]
-    public DateTime ToUtc { get; set; }
-
-    [JsonPropertyName("price")]
-    public decimal Price { get; set; }
-
-    [JsonPropertyName("currencyId")]
-    public int CurrencyId { get; set; }
+    [JsonPropertyName("sentUtc")]
+    public DateTime SentUtc { get; set; }
 
     [JsonPropertyName("quantityMw")]
     public decimal QuantityMw { get; set; }
 
-    [JsonPropertyName("directionId")]
-    public int DirectionId { get; set; }
+    [JsonPropertyName("direction")]
+    public Direction Direction { get; set; }
 
     [JsonPropertyName("bidId")]
     public int BidId { get; set; }

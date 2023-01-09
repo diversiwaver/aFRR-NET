@@ -24,12 +24,10 @@ internal class TestPrioritizationDataAccess
         string signalDTOStringContent = """
             {
                 "id": 1,
-                "fromUtc": "2023-01-04T12:16:56.28Z",
-                "toUtc": "2023-01-04T12:16:56.28Z",
-                "price": 25,
-                "currencyId": 0,
+                "receivedUtc": "2023-01-04T12:16:56.28Z",
+                "sentUtc": "2023-01-04T12:16:56.28Z",
                 "quantityMw": 20,
-                "directionId": 1,
+                "direction": 0,
                 "bidId": 0,
                 "assetsToRegulate": [
                     {
@@ -88,12 +86,10 @@ internal class TestPrioritizationDataAccess
         SignalDTO signalDTO = new SignalDTO
         {
             Id = 1,
-            FromUtc = DateTime.Parse("2023-01-04T12:16:56.28Z"),
-            ToUtc = DateTime.Parse("2023-01-04T12:16:56.28Z"),
-            Price = 25,
-            CurrencyId = 0,
+            ReceivedUtc = DateTime.Parse("2023-01-04T12:16:56.28Z"),
+            SentUtc = DateTime.Parse("2023-01-04T12:16:56.28Z"),
             QuantityMw = 20,
-            DirectionId = 1,
+            Direction = Direction.Down,
             BidId = 0,
         };
 

@@ -43,12 +43,10 @@ public class TestRemoteControl
         SignalDTO signalDTO = new SignalDTO()
         {
             Id = 1,
-            FromUtc = DateTime.UtcNow,
-            ToUtc = DateTime.UtcNow.AddHours(1),
-            Price = 20,
-            CurrencyId = 1,
+            ReceivedUtc = DateTime.UtcNow,
+            SentUtc = DateTime.UtcNow.AddHours(1),
             QuantityMw = 10,
-            DirectionId = 0,
+            Direction = Direction.Up,
             BidId = 0,
             AssetsToRegulate = new List<AssetDTO>()
             {
