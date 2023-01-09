@@ -27,7 +27,7 @@ internal class IntegrationTestaFFRService
         //Arrange
         decimal price = (decimal)(_random.NextDouble() * 15 + 10);
         decimal quantity = (decimal)(_random.NextDouble() * 15 + 10);
-        SignalDTO newSignalDto = new() { Id = 0, CurrencyId = 0, FromUtc = DateTime.UtcNow, ToUtc = DateTime.UtcNow.AddHours(1), Price = price, QuantityMw = quantity, DirectionId = 0, BidId = 0 };
+        SignalDTO newSignalDto = new() { Id = 0, ReceivedUtc = DateTime.UtcNow, SentUtc = DateTime.UtcNow.AddHours(1), QuantityMw = quantity, Direction = Direction.Up, BidId = 0 };
         //Act
         var idActionResult = (await _webApiController.PostAsync(newSignalDto)).Result;
         if (idActionResult is ObjectResult objRes)
