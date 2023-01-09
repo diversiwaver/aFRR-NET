@@ -1,27 +1,33 @@
-﻿using WebAPI.Controllers;
-using TestWebAPI.Stubs;
+﻿using aFRRService.DTOs;
+using BaseDataAccess.Interfaces;
+using DataAccessLayer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
-using aFRRService.DTOs;
+using TestWebAPI.Stubs;
+using WebAPI.Controllers;
 
-namespace TestWebAPI.Tests;
-
-public class TestSignalController
+namespace TestWebAPI;
+internal class IntegrationTestaFFRService
 {
     SignalsController _webApiController;
+    Random _random;
 
     [OneTimeSetUp]
     public void OneTimeSetup()
     {
-        _webApiController = new SignalsController(new SignalStub(), new Mock<ILogger<SignalsController>>().Object);
+        ISignalDataAccess signalDataAccess = DataAccessFactory.GetDataAccess<ISignalDataAccess>(Configuration.CONNECTION_STRING_TEST);
+        _webApiController = new SignalsController(signalDataAccess, new Mock<ILogger<SignalsController>>().Object);
+        _random = new Random();
     }
 
     [Test]
     public async Task SignalsController_ShouldReturnCreatedSignalId()
     {
         //Arrange
-        SignalDTO newSignalDto = new() { Id = 0, ReceivedUtc = new DateTime(2022, 12, 12, 10, 00, 0), SentUtc = new DateTime(2022, 12, 12, 11, 00, 0), QuantityMw = 10, BidId = 0 };
+        decimal price = (decimal)(_random.NextDouble() * 15 + 10);
+        decimal quantity = (decimal)(_random.NextDouble() * 15 + 10);
+        SignalDTO newSignalDto = new() { Id = 0, CurrencyId = 0, FromUtc = DateTime.UtcNow, ToUtc = DateTime.UtcNow.AddHours(1), Price = price, QuantityMw = quantity, DirectionId = 0, BidId = 0 };
         //Act
         var idActionResult = (await _webApiController.PostAsync(newSignalDto)).Result;
         if (idActionResult is ObjectResult objRes)
@@ -30,6 +36,8 @@ public class TestSignalController
             Assert.That(objRes.StatusCode, Is.EqualTo(200), "Status code returned was not 200");
 
             int returnedId = (int)objRes.Value;
+            Assert.That(returnedId, Is.Not.EqualTo(-1), "Returned Id was -1, indicating a fail in the data access");
+            newSignalDto.Id = returnedId;
             Assert.That(returnedId, Is.EqualTo(newSignalDto.Id), "Signal wasn't created");
         }
         else if (idActionResult is StatusCodeResult scr)

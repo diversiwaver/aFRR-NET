@@ -30,10 +30,8 @@ public class TestSignalDataAccess
         //Arrange
         Signal signal = new()
         {
-            FromUtc = DateTime.UtcNow,
-            ToUtc = DateTime.UtcNow.AddHours(1),
-            Price = 20,
-            CurrencyId = 1,
+            ReceivedUtc = DateTime.UtcNow,
+            SentUtc = DateTime.UtcNow.AddHours(1),
             QuantityMw = 10,
             DirectionId = 0,
             BidId = 0
@@ -87,10 +85,8 @@ public class TestSignalDataAccess
         signal = new()
         {
             Id = _lastCreatedModelId,
-            FromUtc = signal.FromUtc,
-            ToUtc = signal.ToUtc,
-            Price = signal.Price,
-            CurrencyId = signal.CurrencyId,
+            ReceivedUtc = signal.ReceivedUtc,
+            SentUtc = signal.SentUtc,
             QuantityMw = signal.QuantityMw,
             DirectionId = newDirectionId,
             BidId = signal.BidId
@@ -147,10 +143,8 @@ public class TestSignalDataAccess
         Signal refoundSignal;
         Signal signal = new()
         {
-            FromUtc = DateTime.UtcNow,
-            ToUtc = DateTime.UtcNow.AddHours(1),
-            Price = 20,
-            CurrencyId = 1,
+            ReceivedUtc = DateTime.UtcNow,
+            SentUtc = DateTime.UtcNow.AddHours(1),
             QuantityMw = 10,
             DirectionId = 0,
             BidId = -999
