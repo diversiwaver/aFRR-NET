@@ -33,9 +33,9 @@ public class TsoSignalConsumer : IConsumer<TSOSignal>
         {
             Id = tsoSignal.SignalId,
             BidId = Int32.Parse(tsoSignal.BidId),
-            FromUtc = DateTime.TryParse(tsoSignal.ReceivedUTC, out var fromUtc) ? fromUtc : DateTime.UtcNow,
+            ReceivedUtc = DateTime.TryParse(tsoSignal.ReceivedUTC, out var fromUtc) ? fromUtc : DateTime.UtcNow,
             QuantityMw = Math.Abs(tsoSignal.QuantityMw),
-            DirectionId = tsoSignal.QuantityMw > 0 ? 0 : 1
+            Direction = tsoSignal.QuantityMw > 0 ? Direction.Up : Direction.Down
         };
         
         try
@@ -47,7 +47,7 @@ public class TsoSignalConsumer : IConsumer<TSOSignal>
                 _logger.LogError("Failed to send the SignalDTO to the RemoteControlAPI");
                 return;
             }
-            signalDTO.ToUtc = DateTime.UtcNow;
+            signalDTO.SentUtc = DateTime.UtcNow;
             Signal signal = DTOConverter<SignalDTO, Signal>.From(signalDTO);
             await _signalDataAccess.CreateAsync(signal);
         }
