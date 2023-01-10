@@ -1,17 +1,13 @@
 ﻿using aFRRService.DTOs;
 using DataAccessLayer.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace DataAccessLayer.DataAccess
 {
     public class PrioritizationDataAccess : IPrioritizationDataAccess
     {
-        private HttpClient _client;
+        private readonly HttpClient _client;
 
         public PrioritizationDataAccess(HttpClient client)
         {
@@ -26,7 +22,7 @@ namespace DataAccessLayer.DataAccess
             using var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri("/api/prioritization", UriKind.Relative),
+                RequestUri = new Uri("/api/prioritizations/assetregulations", UriKind.Relative),
                 Content = content
             };
 

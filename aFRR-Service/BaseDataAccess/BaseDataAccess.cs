@@ -7,7 +7,7 @@ namespace BaseDataAccess;
 
 public abstract class BaseDataAccess<T> : IBaseDataAccess<T> where T : class
 {
-    private readonly string _connetionString;
+    private readonly string _connectionString;
 
     // ValueNames = "value1, value2"
     private string ValueNames => GetJoinedStrings(TableColumns);
@@ -18,7 +18,7 @@ public abstract class BaseDataAccess<T> : IBaseDataAccess<T> where T : class
     // ValueUpdates = "value1=@value1, value2=@value2"
     private string ValueUpdates => GetJoinedConditionStrings(TableColumns, prefix: "@");
 
-    protected IDbConnection CreateConnection() => new SqlConnection(_connetionString);
+    protected IDbConnection CreateConnection() => new SqlConnection(_connectionString);
 
     // The name of the table
     protected string TableName { get; set; }
@@ -48,7 +48,7 @@ public abstract class BaseDataAccess<T> : IBaseDataAccess<T> where T : class
             .Select(property => property.Name)
             .Except(AutoIncrementingIds)
             .Except(GetAllPropertyNamesWithAttribute(typeof(ExcludeFromDataAccessAttribute)));
-        _connetionString = connectionString;
+        _connectionString = connectionString;
         PrepareSQLCommands();
     }
 

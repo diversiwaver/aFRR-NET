@@ -25,7 +25,6 @@ internal class IntegrationTestaFFRService
     public async Task SignalsController_ShouldReturnCreatedSignalId()
     {
         //Arrange
-        decimal price = (decimal)(_random.NextDouble() * 15 + 10);
         decimal quantity = (decimal)(_random.NextDouble() * 15 + 10);
         SignalDTO newSignalDto = new() { Id = 0, ReceivedUtc = DateTime.UtcNow, SentUtc = DateTime.UtcNow.AddHours(1), QuantityMw = quantity, Direction = Direction.Up, BidId = 0 };
         //Act

@@ -7,7 +7,7 @@ namespace DataAccessLayer.DataAccess;
 
 internal class RemoteControlDataAccess : IRemoteControlDataAccess
 {
-    private HttpClient _client;
+    private readonly HttpClient _client;
 
     public RemoteControlDataAccess(HttpClient client)
     {
@@ -22,7 +22,7 @@ internal class RemoteControlDataAccess : IRemoteControlDataAccess
         using var request = new HttpRequestMessage()
         {
             Method = HttpMethod.Post,
-            RequestUri = new Uri("/signals/sendsignal", UriKind.Relative),
+            RequestUri = new Uri("api/signals/sendsignal", UriKind.Relative),
             Content = content
         };
 
