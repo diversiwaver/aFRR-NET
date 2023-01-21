@@ -9,6 +9,8 @@ internal class SignalDataAccess : BaseDataAccess<Signal>, ISignalDataAccess
         InsertCommand = """
             SET XACT_ABORT ON;
 
+            SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
+
             BEGIN TRANSACTION; 
 
             INSERT INTO Signal (ReceivedUtc, SentUtc, QuantityMw, DirectionId) OUTPUT INSERTED.Id VALUES (@ReceivedUtc, @SentUtc, @QuantityMw, @DirectionId);
