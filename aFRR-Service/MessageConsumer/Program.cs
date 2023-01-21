@@ -10,7 +10,6 @@ IHost host = Host.CreateDefaultBuilder(args)
     {
         services.AddMassTransit(x =>
         {
-            // [1] Uncomment, as well as [2], in case you want to debug and consume your own messages
             x.AddConsumer<TsoSignalConsumer>(c =>
             {
                 c.UseConcurrencyLimit(1);
@@ -22,7 +21,6 @@ IHost host = Host.CreateDefaultBuilder(args)
                     h.Username(host.Configuration["RabbitMQUsername"]);
                     h.Password(host.Configuration["RabbitMQPassword"]);
                 });
-                // [2] Uncomment, as well as [1] in case you want to debug and consume your own messages
                 cfg.ReceiveEndpoint("tso-signal-list", configurator =>
                 {
                     configurator.ConfigureConsumeTopology = false;
@@ -40,7 +38,7 @@ IHost host = Host.CreateDefaultBuilder(args)
         HttpClient remoteControlClient = new HttpClient() { BaseAddress = new Uri(host.Configuration["RemoteControlUri"]) };
 
         services.AddScoped((dataAccess) => DataAccessFactory.GetDataAccess<IPrioritizationDataAccess>(prioritizationClient));
-        services.AddScoped((dataAccess) => DataAccessFactory.GetDataAccess<IRemoteControlDataAccess>(remoteControlClient));
+        services.AddScoped((dataAccess) => DataAccessFactory.GetDataAccess<IRemoteSignalDataAccess>(remoteControlClient));
         services.AddScoped((dataAccess) => DataAccessFactory.GetDataAccess<ISignalDataAccess>(host.Configuration.GetConnectionString("DefaultConnection")));
     })
     .Build();

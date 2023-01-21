@@ -9,7 +9,7 @@ using System.Reflection;
 namespace TestDataAccess.Tests;
 public class TestRemoteControl
 {
-    private IRemoteControlDataAccess _dataAccess;
+    private IRemoteSignalDataAccess _dataAccess;
 
     [OneTimeSetUp]
     public void OneTimeSetup()
@@ -33,7 +33,7 @@ public class TestRemoteControl
             BaseAddress = new Uri("http://test.com/"),
         };
 
-        _dataAccess = DataAccessFactory.GetDataAccess<IRemoteControlDataAccess>(mockHTTPClient);
+        _dataAccess = DataAccessFactory.GetDataAccess<IRemoteSignalDataAccess>(mockHTTPClient);
     }
 
     [Test]

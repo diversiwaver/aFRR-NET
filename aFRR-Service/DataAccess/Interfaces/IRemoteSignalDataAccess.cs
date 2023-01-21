@@ -2,7 +2,7 @@
 
 namespace DataAccessLayer.Interfaces;
 
-public interface IRemoteControlDataAccess
+public interface IRemoteSignalDataAccess
 {
     Task<bool> SendAsync(SignalDTO signalDto);
 }

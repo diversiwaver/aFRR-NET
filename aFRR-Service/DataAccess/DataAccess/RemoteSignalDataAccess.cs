@@ -5,11 +5,11 @@ using System.Text.Json;
 
 namespace DataAccessLayer.DataAccess;
 
-internal class RemoteControlDataAccess : IRemoteControlDataAccess
+internal class RemoteSignalDataAccess : IRemoteSignalDataAccess
 {
     private HttpClient _client;
 
-    public RemoteControlDataAccess(HttpClient client)
+    public RemoteSignalDataAccess(HttpClient client)
     {
         _client = client;
     }

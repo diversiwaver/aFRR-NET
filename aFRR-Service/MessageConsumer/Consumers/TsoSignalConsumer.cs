@@ -12,17 +12,17 @@ public class TsoSignalConsumer : IConsumer<TSOSignal>
 {
     private readonly ILogger<TsoSignalConsumer> _logger;
     private readonly IPrioritizationDataAccess _prioritizationDataAccess;
-    private readonly IRemoteControlDataAccess _remoteControlDataAccess;
+    private readonly IRemoteSignalDataAccess _remoteSignalDataAccess;
     private readonly ISignalDataAccess _signalDataAccess;
 
     public TsoSignalConsumer(ILogger<TsoSignalConsumer> logger, 
         IPrioritizationDataAccess prioritizationDataAccess, 
-        IRemoteControlDataAccess remoteControlDataAccess,
+        IRemoteSignalDataAccess remoteSignalDataAccess,
         ISignalDataAccess signalDataAccess)
     {
         _logger = logger;
         _prioritizationDataAccess = prioritizationDataAccess;
-        _remoteControlDataAccess = remoteControlDataAccess;
+        _remoteSignalDataAccess = remoteSignalDataAccess;
         _signalDataAccess = signalDataAccess;
     }
 
@@ -33,7 +33,8 @@ public class TsoSignalConsumer : IConsumer<TSOSignal>
         {
             Id = tsoSignal.SignalId,
             BidId = Int32.Parse(tsoSignal.BidId),
-            ReceivedUtc = DateTime.TryParse(tsoSignal.ReceivedUTC, out var fromUtc) ? fromUtc : DateTime.UtcNow,
+            ReceivedUtc = DateTime.TryParse(tsoSignal.ReceivedUTC, out var fromUtc)
+            ? fromUtc : DateTime.UtcNow,
             QuantityMw = Math.Abs(tsoSignal.QuantityMw),
             Direction = tsoSignal.QuantityMw > 0 ? Direction.Up : Direction.Down
         };
@@ -41,7 +42,7 @@ public class TsoSignalConsumer : IConsumer<TSOSignal>
         try
         {
             signalDTO = await _prioritizationDataAccess.GetAsync(signalDTO);
-            bool signalSent = await _remoteControlDataAccess.SendAsync(signalDTO);
+            bool signalSent = await _remoteSignalDataAccess.SendAsync(signalDTO);
             if (signalSent)
             {
                 signalDTO.SentUtc = DateTime.UtcNow;
